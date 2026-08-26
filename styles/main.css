@@ -1,0 +1,267 @@
+:root {
+  color-scheme: light;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI",
+    sans-serif;
+  color: #172033;
+  background: #f4f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top right, #d9e8ff 0, transparent 30rem),
+    #f4f7fb;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(100%, 1050px);
+  margin: 0 auto;
+  padding: 32px 16px 56px;
+}
+
+.app-header {
+  max-width: 680px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #3d64bd;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.lede {
+  margin-bottom: 24px;
+  color: #52627d;
+  line-height: 1.7;
+}
+
+.generator-panel,
+.board-section,
+.generator-information {
+  border: 1px solid #dbe3f0;
+  border-radius: 20px;
+  background: rgb(255 255 255 / 0.88);
+  box-shadow: 0 12px 30px rgb(37 62 105 / 0.08);
+}
+
+.generator-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 18px;
+}
+
+.generator-panel label {
+  display: grid;
+  gap: 6px;
+  color: #334361;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.generator-panel select,
+.generator-panel input {
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid #c9d5e8;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 12px;
+  color: #172033;
+  font-weight: 600;
+}
+
+.field-help {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #667692;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 44px;
+  border-radius: 12px;
+  padding: 0 16px;
+  font-weight: 800;
+}
+
+.primary-button {
+  border: 1px solid #235bd2;
+  background: #2a64dd;
+  color: #fff;
+}
+
+.secondary-button {
+  border: 1px solid #c9d5e8;
+  background: #fff;
+  color: #2d497c;
+}
+
+.status-message {
+  min-height: 1.5em;
+  margin: 18px 2px;
+  color: #52627d;
+  font-size: 0.9rem;
+}
+
+.status-message--error {
+  color: #a92842;
+  white-space: pre-line;
+}
+
+.puzzle-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.72fr);
+  align-items: start;
+  gap: 18px;
+}
+
+.board-section,
+.generator-information {
+  padding: 18px;
+}
+
+.board-meta {
+  margin-bottom: 16px;
+  color: #65748e;
+  font-size: 0.86rem;
+}
+
+.crossword-board {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  width: min(100%, 500px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 2px solid #172033;
+  border-radius: 8px;
+  background: #172033;
+  gap: 1px;
+}
+
+.board-cell {
+  display: grid;
+  min-width: 0;
+  aspect-ratio: 1;
+  place-items: center;
+  background: #172033;
+  color: transparent;
+  font-weight: 800;
+}
+
+.board-cell--filled {
+  background: #fff;
+  color: #1a2844;
+  font-size: clamp(0.72rem, 4.8vw, 1.35rem);
+}
+
+.board-cell--crossing {
+  background: #e7f0ff;
+  color: #17489c;
+}
+
+.metric-list,
+.term-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.metric-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 14px;
+  margin-bottom: 24px;
+  color: #52627d;
+  font-size: 0.83rem;
+}
+
+.term-list {
+  display: grid;
+  gap: 8px;
+  color: #52627d;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.term-item strong {
+  margin-right: 4px;
+  color: #1d2d4b;
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    padding-top: 22px;
+  }
+
+  .generator-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .field-help,
+  .actions {
+    grid-column: auto;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .puzzle-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

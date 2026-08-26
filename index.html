@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="高校化学・有機化合物を題材にしたクロスワード学習アプリ"
+    />
+    <title>有機化学クロスワード</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">ORGANIC CHEMISTRY PUZZLE</p>
+        <h1>有機化学クロスワード</h1>
+        <p class="lede">
+          Phase 1 · 脂肪族100語から、毎回異なる連結クロスワードを生成します。
+        </p>
+      </header>
+
+      <section class="generator-panel" aria-label="盤面生成設定">
+        <label>
+          大きさ
+          <select id="preset-select" aria-label="大きさ">
+            <option value="easy">EASY · 7×7</option>
+            <option value="normal" selected>NORMAL · 9×9</option>
+            <option value="hard">HARD · 11×11</option>
+          </select>
+        </label>
+
+        <label>
+          再現用 seed
+          <input
+            id="seed-input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            spellcheck="false"
+            aria-describedby="seed-help"
+          />
+        </label>
+
+        <p id="seed-help" class="field-help">
+          同じseed・データ版・設定なら同じ盤面になります。
+        </p>
+
+        <div class="actions">
+          <button id="generate-button" class="primary-button" type="button">
+            この盤面を生成
+          </button>
+          <button id="new-seed-button" class="secondary-button" type="button">
+            新しい盤面
+          </button>
+        </div>
+      </section>
+
+      <p id="status-message" class="status-message" aria-live="polite">
+        教材データを読み込んでいます。
+      </p>
+
+      <section id="puzzle-output" class="puzzle-output" aria-live="polite"></section>
+    </main>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

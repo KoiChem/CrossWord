@@ -1,0 +1,2647 @@
+{
+  "meta": {
+    "version": "0.1",
+    "theme": "脂肪族",
+    "entryCount": 100,
+    "answerPolicy": "盤面のcanonical answerは、ひらがな・小書きひらがな・長音符のみ。aliasesは表示・検索・ヒント用で、長さが異なる別名を盤面の代替正答にはしない。",
+    "priorityPolicy": {
+      "learningPriority": {
+        "A": "高校化学の中核。高頻度で学習対象にする",
+        "B": "標準・やや発展。難易度やテーマに応じて使用",
+        "C": "補助・語彙拡張"
+      },
+      "crosswordPriority": {
+        "A": "盤面に置きやすく、通常プールで優先",
+        "B": "短い/長い等の理由で条件付き採用",
+        "C": "重要でもパズル適性が低い。原則低頻度"
+      }
+    },
+    "sources": {
+      "mext": {
+        "title": "高等学校学習指導要領（平成30年告示）解説 理科編 理数編",
+        "url": "https://www.mext.go.jp/content/20230522-mxt_kyoikujinzai02-000033060_05.pdf"
+      },
+      "tryit": {
+        "title": "Try IT 高校化学 有機化合物",
+        "url": "https://www.try-it.jp/chapters-9788/"
+      },
+      "kimika": {
+        "title": "化学のグルメ 脂肪族化合物",
+        "url": "https://kimika.net/aliphatic-compound.html"
+      },
+      "kimika_oil": {
+        "title": "化学のグルメ 油脂",
+        "url": "https://kimika.net/iy6yushi.html"
+      }
+    }
+  },
+  "entries": [
+    {
+      "id": "chain_hydrocarbon",
+      "displayName": "鎖式炭化水素",
+      "answer": "さしきたんかすいそ",
+      "answerLength": 9,
+      "category": "基礎・分類",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素骨格が鎖状になっている炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "alicyclic_hydrocarbon",
+      "displayName": "脂環式炭化水素",
+      "answer": "しかんしきたんかすいそ",
+      "answerLength": 11,
+      "category": "基礎・分類",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "芳香族ではなく、環状の炭素骨格をもつ炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "saturated_hydrocarbon",
+      "displayName": "飽和炭化水素",
+      "answer": "ほうわたんかすいそ",
+      "answerLength": 9,
+      "category": "基礎・分類",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素原子間が単結合だけからなる炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "unsaturated_hydrocarbon",
+      "displayName": "不飽和炭化水素",
+      "answer": "ふほうわたんかすいそ",
+      "answerLength": 10,
+      "category": "基礎・分類",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素原子間に二重結合または三重結合をもつ炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "functional_group",
+      "displayName": "官能基",
+      "answer": "かんのうき",
+      "answerLength": 5,
+      "category": "基礎・分類",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "有機化合物の性質や反応性を特徴づける原子または原子団。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "structural_isomer",
+      "displayName": "構造異性体",
+      "answer": "こうぞういせいたい",
+      "answerLength": 9,
+      "category": "基礎・分類",
+      "family": "isomer",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "分子式は同じだが、原子の結合の仕方が異なる化合物どうし。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "cis_trans_isomer",
+      "displayName": "シス-トランス異性体",
+      "answer": "しすとらんすいせいたい",
+      "answerLength": 11,
+      "category": "基礎・分類",
+      "family": "stereoisomer",
+      "enabledByDefault": true,
+      "aliases": [
+        "幾何異性体"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "二重結合などのため回転が制限され、置換基の位置関係が異なる立体異性体。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "enantiomer",
+      "displayName": "鏡像異性体",
+      "answer": "きょうぞういせいたい",
+      "answerLength": 10,
+      "category": "基礎・分類",
+      "family": "stereoisomer",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "互いに鏡に映した関係にあり、重ね合わせることができない異性体。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "chiral_carbon",
+      "displayName": "不斉炭素原子",
+      "answer": "ふせいたんそげんし",
+      "answerLength": 9,
+      "category": "基礎・分類",
+      "family": "stereoisomer",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "4種類の異なる原子または原子団が結合した炭素原子。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "hydroxy_group",
+      "displayName": "ヒドロキシ基",
+      "answer": "ひどろきしき",
+      "answerLength": 6,
+      "category": "官能基",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "−OH で表され、アルコールを特徴づける官能基。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "carbonyl_group",
+      "displayName": "カルボニル基",
+      "answer": "かるぼにるき",
+      "answerLength": 6,
+      "category": "官能基",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": ">C=O で表される原子団。アルデヒドやケトンに含まれる。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "carboxy_group",
+      "displayName": "カルボキシ基",
+      "answer": "かるぼきしき",
+      "answerLength": 6,
+      "category": "官能基",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "−COOH で表され、カルボン酸を特徴づける官能基。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "alkyl_group",
+      "displayName": "アルキル基",
+      "answer": "あるきるき",
+      "answerLength": 5,
+      "category": "基礎・分類",
+      "family": "alkyl_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "アルカンから水素原子を1個取り去ってできる原子団。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "alkane",
+      "displayName": "アルカン",
+      "answer": "あるかん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "一般式 CnH2n+2 で表される鎖式飽和炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "alkene",
+      "displayName": "アルケン",
+      "answer": "あるけん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素間の二重結合を1個もつ鎖式不飽和炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "alkyne",
+      "displayName": "アルキン",
+      "answer": "あるきん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素間の三重結合を1個もつ鎖式不飽和炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "cycloalkane",
+      "displayName": "シクロアルカン",
+      "answer": "しくろあるかん",
+      "answerLength": 7,
+      "category": "炭化水素",
+      "family": "hydrocarbon_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素原子が環をつくり、炭素間が単結合だけからなる炭化水素。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "methane",
+      "displayName": "メタン",
+      "answer": "めたん",
+      "answerLength": 3,
+      "category": "炭化水素",
+      "family": "alkane_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 CH4 の最も簡単なアルカン。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "ethane",
+      "displayName": "エタン",
+      "answer": "えたん",
+      "answerLength": 3,
+      "category": "炭化水素",
+      "family": "alkane_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C2H6 のアルカン。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "propane",
+      "displayName": "プロパン",
+      "answer": "ぷろぱん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "alkane_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C3H8 のアルカン。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "butane",
+      "displayName": "ブタン",
+      "answer": "ぶたん",
+      "answerLength": 3,
+      "category": "炭化水素",
+      "family": "alkane_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C4H10 のアルカン。構造異性体をもつ。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "pentane",
+      "displayName": "ペンタン",
+      "answer": "ぺんたん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "alkane_name",
+      "enabledByDefault": false,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C5H12 のアルカン。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "C",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "cyclohexane",
+      "displayName": "シクロヘキサン",
+      "answer": "しくろへきさん",
+      "answerLength": 7,
+      "category": "炭化水素",
+      "family": "cycloalkane_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C6H12 の代表的なシクロアルカン。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ethylene",
+      "displayName": "エチレン",
+      "answer": "えちれん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "alkene_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "エテン"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "分子式 C2H4 の最も簡単なアルケン。エタノールの脱水でも得られる。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "propene",
+      "displayName": "プロペン",
+      "answer": "ぷろぺん",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "alkene_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "プロピレン"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "分子式 C3H6 のアルケン。水の付加では主に2-プロパノールを生じる。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "butene",
+      "displayName": "ブテン",
+      "answer": "ぶてん",
+      "answerLength": 3,
+      "category": "炭化水素",
+      "family": "alkene_name",
+      "enabledByDefault": false,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C4H8 のアルケンの総称。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "C",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "acetylene",
+      "displayName": "アセチレン",
+      "answer": "あせちれん",
+      "answerLength": 5,
+      "category": "炭化水素",
+      "family": "alkyne_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "エチン"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "分子式 C2H2 の最も簡単なアルキン。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "methyl_group",
+      "displayName": "メチル基",
+      "answer": "めちるき",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "alkyl_group_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "メタンから水素原子を1個取り去った −CH3 の原子団。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ethyl_group",
+      "displayName": "エチル基",
+      "answer": "えちるき",
+      "answerLength": 4,
+      "category": "炭化水素",
+      "family": "alkyl_group_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "エタンから水素原子を1個取り去った −C2H5 の原子団。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "substitution",
+      "displayName": "置換反応",
+      "answer": "ちかんはんのう",
+      "answerLength": 7,
+      "category": "反応",
+      "family": "hydrocarbon_reaction",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "有機化合物の原子または原子団が別の原子や原子団に置き換わる反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "addition",
+      "displayName": "付加反応",
+      "answer": "ふかはんのう",
+      "answerLength": 6,
+      "category": "反応",
+      "family": "hydrocarbon_reaction",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "二重結合や三重結合の一部が切れ、原子や原子団が結合する反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "oxidation",
+      "displayName": "酸化反応",
+      "answer": "さんかはんのう",
+      "answerLength": 7,
+      "category": "反応",
+      "family": "redox_reaction",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "アルコールからアルデヒド・ケトン・カルボン酸などを生じる際に重要な反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "dehydration",
+      "displayName": "脱水反応",
+      "answer": "だっすいはんのう",
+      "answerLength": 8,
+      "category": "反応",
+      "family": "dehydration",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "分子から水が取れる反応。アルコールからアルケンやエーテルをつくる例がある。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "surfactant",
+      "displayName": "界面活性剤",
+      "answer": "かいめんかっせいざい",
+      "answerLength": 10,
+      "category": "油脂・セッケン",
+      "family": "soap",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "親水性部分と疎水性部分をもち、水と油の界面に作用する物質。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "alcohol",
+      "displayName": "アルコール",
+      "answer": "あるこーる",
+      "answerLength": 5,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭化水素の水素原子をヒドロキシ基で置換した構造をもつ化合物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "monohydric_alcohol",
+      "displayName": "一価アルコール",
+      "answer": "いっかあるこーる",
+      "answerLength": 8,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_valence",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "1分子中にヒドロキシ基を1個もつアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "dihydric_alcohol",
+      "displayName": "二価アルコール",
+      "answer": "にかあるこーる",
+      "answerLength": 7,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_valence",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "1分子中にヒドロキシ基を2個もつアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "trihydric_alcohol",
+      "displayName": "三価アルコール",
+      "answer": "さんかあるこーる",
+      "answerLength": 8,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_valence",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "1分子中にヒドロキシ基を3個もつアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "primary_alcohol",
+      "displayName": "第一級アルコール",
+      "answer": "だいいっきゅうあるこーる",
+      "answerLength": 12,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_degree",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "ヒドロキシ基のついた炭素に、他の炭素原子が1個結合している型のアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "secondary_alcohol",
+      "displayName": "第二級アルコール",
+      "answer": "だいにきゅうあるこーる",
+      "answerLength": 11,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_degree",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "ヒドロキシ基のついた炭素に、他の炭素原子が2個結合している型のアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "tertiary_alcohol",
+      "displayName": "第三級アルコール",
+      "answer": "だいさんきゅうあるこーる",
+      "answerLength": 12,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_degree",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "ヒドロキシ基のついた炭素に、他の炭素原子が3個結合している型のアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "methanol",
+      "displayName": "メタノール",
+      "answer": "めたのーる",
+      "answerLength": 5,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "分子式 CH3OH の最も簡単なアルコール。酸化するとホルムアルデヒドを生じる。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ethanol",
+      "displayName": "エタノール",
+      "answer": "えたのーる",
+      "answerLength": 5,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "CH3CH2OH で表され、酸化するとアセトアルデヒドを生じるアルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "propanol_1",
+      "displayName": "1-プロパノール",
+      "answer": "いちぷろぱのーる",
+      "answerLength": 8,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "CH3CH2CH2OH で表される第一級アルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "propanol_2",
+      "displayName": "2-プロパノール",
+      "answer": "にぷろぱのーる",
+      "answerLength": 7,
+      "category": "アルコール・エーテル",
+      "family": "alcohol_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "イソプロピルアルコール"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "CH3CH(OH)CH3 で表され、酸化するとアセトンになる第二級アルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ethylene_glycol",
+      "displayName": "エチレングリコール",
+      "answer": "えちれんぐりこーる",
+      "answerLength": 9,
+      "category": "アルコール・エーテル",
+      "family": "polyhydric_alcohol",
+      "enabledByDefault": true,
+      "aliases": [
+        "1,2-エタンジオール"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "HO−CH2−CH2−OH で表される二価アルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "glycerol",
+      "displayName": "グリセリン",
+      "answer": "ぐりせりん",
+      "answerLength": 5,
+      "category": "アルコール・エーテル",
+      "family": "polyhydric_alcohol",
+      "enabledByDefault": true,
+      "aliases": [
+        "グリセロール",
+        "1,2,3-プロパントリオール"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "ヒドロキシ基を3個もち、油脂の構成成分となる三価アルコール。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "intermolecular_dehydration",
+      "displayName": "分子間脱水",
+      "answer": "ぶんしかんだっすい",
+      "answerLength": 9,
+      "category": "アルコール・エーテル",
+      "family": "dehydration",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "2分子のアルコールの間から水が取れ、エーテルを生じる脱水。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "intramolecular_dehydration",
+      "displayName": "分子内脱水",
+      "answer": "ぶんしないだっすい",
+      "answerLength": 9,
+      "category": "アルコール・エーテル",
+      "family": "dehydration",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "1分子のアルコールから水が取れ、アルケンを生じる脱水。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ether",
+      "displayName": "エーテル",
+      "answer": "えーてる",
+      "answerLength": 4,
+      "category": "アルコール・エーテル",
+      "family": "ether",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "R−O−R' の形のエーテル結合をもつ化合物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ether_bond",
+      "displayName": "エーテル結合",
+      "answer": "えーてるけつごう",
+      "answerLength": 8,
+      "category": "アルコール・エーテル",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "2つの炭化水素基が酸素原子を介して結合した −O− の部分。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "diethyl_ether",
+      "displayName": "ジエチルエーテル",
+      "answer": "じえちるえーてる",
+      "answerLength": 8,
+      "category": "アルコール・エーテル",
+      "family": "ether_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "2分子のエタノールを分子間脱水すると生成する代表的なエーテル。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "aldehyde",
+      "displayName": "アルデヒド",
+      "answer": "あるでひど",
+      "answerLength": 5,
+      "category": "アルデヒド・ケトン",
+      "family": "carbonyl_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "アルデヒド基 −CHO をもつ化合物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "aldehyde_group",
+      "displayName": "アルデヒド基",
+      "answer": "あるでひどき",
+      "answerLength": 6,
+      "category": "アルデヒド・ケトン",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "−CHO で表され、還元性を示す化合物群を特徴づける官能基。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "formaldehyde",
+      "displayName": "ホルムアルデヒド",
+      "answer": "ほるむあるでひど",
+      "answerLength": 8,
+      "category": "アルデヒド・ケトン",
+      "family": "aldehyde_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "メタナール"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "HCHO で表され、メタノールの酸化で生じるアルデヒド。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "formalin",
+      "displayName": "ホルマリン",
+      "answer": "ほるまりん",
+      "answerLength": 5,
+      "category": "アルデヒド・ケトン",
+      "family": "aldehyde_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "ホルムアルデヒドの水溶液として知られ、防腐などに用いられるもの。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "acetaldehyde",
+      "displayName": "アセトアルデヒド",
+      "answer": "あせとあるでひど",
+      "answerLength": 8,
+      "category": "アルデヒド・ケトン",
+      "family": "aldehyde_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "エタナール"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "CH3CHO で表され、エタノールの酸化で生じるアルデヒド。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ketone",
+      "displayName": "ケトン",
+      "answer": "けとん",
+      "answerLength": 3,
+      "category": "アルデヒド・ケトン",
+      "family": "carbonyl_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "カルボニル基の炭素に2つの炭化水素基が結合した化合物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "acetone",
+      "displayName": "アセトン",
+      "answer": "あせとん",
+      "answerLength": 4,
+      "category": "アルデヒド・ケトン",
+      "family": "ketone_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "プロパノン",
+        "ジメチルケトン"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "CH3COCH3 で表される代表的なケトン。2-プロパノールの酸化で生じる。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "silver_mirror",
+      "displayName": "銀鏡反応",
+      "answer": "ぎんきょうはんのう",
+      "answerLength": 9,
+      "category": "アルデヒド・ケトン",
+      "family": "aldehyde_test",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "アルデヒドなどの還元性により銀イオンが還元され、銀が析出する反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "fehling",
+      "displayName": "フェーリング反応",
+      "answer": "ふぇーりんぐはんのう",
+      "answerLength": 10,
+      "category": "アルデヒド・ケトン",
+      "family": "aldehyde_test",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "脂肪族アルデヒドなどによりCu2+が還元され、酸化銅(I)の赤色沈殿を生じる反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "iodoform_reaction",
+      "displayName": "ヨードホルム反応",
+      "answer": "よーどほるむはんのう",
+      "answerLength": 10,
+      "category": "アルデヒド・ケトン",
+      "family": "carbonyl_test",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "特定のアルコールやケトンから黄色沈殿 CHI3 を生じる検出反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "iodoform",
+      "displayName": "ヨードホルム",
+      "answer": "よーどほるむ",
+      "answerLength": 6,
+      "category": "アルデヒド・ケトン",
+      "family": "carbonyl_test",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "ヨードホルム反応で生じる黄色沈殿。化学式 CHI3。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "reducing_property",
+      "displayName": "還元性",
+      "answer": "かんげんせい",
+      "answerLength": 6,
+      "category": "アルデヒド・ケトン",
+      "family": "aldehyde_property",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "property",
+          "text": "銀鏡反応やフェーリング反応の原因となる、相手を還元する性質。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "carboxylic_acid",
+      "displayName": "カルボン酸",
+      "answer": "かるぼんさん",
+      "answerLength": 6,
+      "category": "カルボン酸・エステル",
+      "family": "carboxylic_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "カルボキシ基 −COOH をもつ有機化合物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "monocarboxylic_acid",
+      "displayName": "モノカルボン酸",
+      "answer": "ものかるぼんさん",
+      "answerLength": 8,
+      "category": "カルボン酸・エステル",
+      "family": "carboxylic_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "1分子中にカルボキシ基を1個もつカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "dicarboxylic_acid",
+      "displayName": "ジカルボン酸",
+      "answer": "じかるぼんさん",
+      "answerLength": 7,
+      "category": "カルボン酸・エステル",
+      "family": "carboxylic_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "1分子中にカルボキシ基を2個もつカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "formic_acid",
+      "displayName": "ギ酸",
+      "answer": "ぎさん",
+      "answerLength": 3,
+      "category": "カルボン酸・エステル",
+      "family": "carboxylic_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "メタン酸"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "property",
+          "text": "HCOOH で表され、カルボン酸でありながら銀鏡反応も示す物質。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "acetic_acid",
+      "displayName": "酢酸",
+      "answer": "さくさん",
+      "answerLength": 4,
+      "category": "カルボン酸・エステル",
+      "family": "carboxylic_name",
+      "enabledByDefault": true,
+      "aliases": [
+        "エタン酸"
+      ],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "CH3COOH で表され、食酢にも含まれる代表的なカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "oxalic_acid",
+      "displayName": "シュウ酸",
+      "answer": "しゅうさん",
+      "answerLength": 5,
+      "category": "カルボン酸・エステル",
+      "family": "carboxylic_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "HOOC−COOH で表される最も簡単なジカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "maleic_acid",
+      "displayName": "マレイン酸",
+      "answer": "まれいんさん",
+      "answerLength": 6,
+      "category": "カルボン酸・エステル",
+      "family": "dicarboxylic_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "structure",
+          "text": "二重結合をもち、2つのカルボキシ基が同じ側にあるシス型のジカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "fumaric_acid",
+      "displayName": "フマル酸",
+      "answer": "ふまるさん",
+      "answerLength": 5,
+      "category": "カルボン酸・エステル",
+      "family": "dicarboxylic_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "structure",
+          "text": "マレイン酸のシス-トランス異性体で、カルボキシ基が反対側にある物質。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "lactic_acid",
+      "displayName": "乳酸",
+      "answer": "にゅうさん",
+      "answerLength": 5,
+      "category": "カルボン酸・エステル",
+      "family": "hydroxy_acid",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "structure",
+          "text": "CH3CH(OH)COOH で表され、不斉炭素原子をもつヒドロキシカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "acid_anhydride",
+      "displayName": "酸無水物",
+      "answer": "さんむすいぶつ",
+      "answerLength": 7,
+      "category": "カルボン酸・エステル",
+      "family": "acid_anhydride",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "カルボン酸などから脱水して生じる酸の誘導体。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "acetic_anhydride",
+      "displayName": "無水酢酸",
+      "answer": "むすいさくさん",
+      "answerLength": 7,
+      "category": "カルボン酸・エステル",
+      "family": "acid_anhydride_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "structure",
+          "text": "酢酸2分子から水1分子が取れた構造をもつ酸無水物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "maleic_anhydride",
+      "displayName": "無水マレイン酸",
+      "answer": "むすいまれいんさん",
+      "answerLength": 9,
+      "category": "カルボン酸・エステル",
+      "family": "acid_anhydride_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "マレイン酸が分子内で脱水して生じる酸無水物。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ester",
+      "displayName": "エステル",
+      "answer": "えすてる",
+      "answerLength": 4,
+      "category": "カルボン酸・エステル",
+      "family": "ester",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "カルボン酸とアルコールから水が取れてできる化合物群。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ester_bond",
+      "displayName": "エステル結合",
+      "answer": "えすてるけつごう",
+      "answerLength": 8,
+      "category": "カルボン酸・エステル",
+      "family": "functional_group",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "formula",
+          "text": "−COO− の形で表され、エステルに含まれる結合部分。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "esterification",
+      "displayName": "エステル化",
+      "answer": "えすてるか",
+      "answerLength": 5,
+      "category": "カルボン酸・エステル",
+      "family": "ester_reaction",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "カルボン酸とアルコールからエステルと水を生じる反応。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "hydrolysis",
+      "displayName": "加水分解",
+      "answer": "かすいぶんかい",
+      "answerLength": 7,
+      "category": "カルボン酸・エステル",
+      "family": "ester_reaction",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "水を加えることによって化合物を分解する反応。エステルではカルボン酸とアルコールを生じる。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "ethyl_acetate",
+      "displayName": "酢酸エチル",
+      "answer": "さくさんえちる",
+      "answerLength": 7,
+      "category": "カルボン酸・エステル",
+      "family": "ester_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "酢酸とエタノールのエステル化で得られる代表的なエステル。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "fat_oil",
+      "displayName": "油脂",
+      "answer": "ゆし",
+      "answerLength": 2,
+      "category": "油脂・セッケン",
+      "family": "oil_fat",
+      "enabledByDefault": false,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "グリセリンと高級脂肪酸からなるエステル。"
+        }
+      ],
+      "sourceKeys": [
+        "mext",
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "C",
+      "selectionWeight": 1
+    },
+    {
+      "id": "fatty_acid",
+      "displayName": "脂肪酸",
+      "answer": "しぼうさん",
+      "answerLength": 5,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "油脂を構成するカルボン酸。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "higher_fatty_acid",
+      "displayName": "高級脂肪酸",
+      "answer": "こうきゅうしぼうさん",
+      "answerLength": 10,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素数の多い一価のカルボン酸。油脂の主要な構成成分。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "saturated_fatty_acid",
+      "displayName": "飽和脂肪酸",
+      "answer": "ほうわしぼうさん",
+      "answerLength": 8,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭化水素鎖に炭素間二重結合をもたない脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "unsaturated_fatty_acid",
+      "displayName": "不飽和脂肪酸",
+      "answer": "ふほうわしぼうさん",
+      "answerLength": 9,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_class",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭化水素鎖に炭素間二重結合をもつ脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "palmitic_acid",
+      "displayName": "パルミチン酸",
+      "answer": "ぱるみちんさん",
+      "answerLength": 7,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素数16の代表的な飽和高級脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "stearic_acid",
+      "displayName": "ステアリン酸",
+      "answer": "すてありんさん",
+      "answerLength": 7,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素数18で二重結合をもたない代表的な飽和高級脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "oleic_acid",
+      "displayName": "オレイン酸",
+      "answer": "おれいんさん",
+      "answerLength": 6,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素数18で二重結合を1個もつ代表的な不飽和高級脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "linoleic_acid",
+      "displayName": "リノール酸",
+      "answer": "りのーるさん",
+      "answerLength": 6,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素数18で二重結合を2個もつ不飽和高級脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "linolenic_acid",
+      "displayName": "リノレン酸",
+      "answer": "りのれんさん",
+      "answerLength": 6,
+      "category": "油脂・セッケン",
+      "family": "fatty_acid_name",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "炭素数18で二重結合を3個もつ不飽和高級脂肪酸。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "fat",
+      "displayName": "脂肪",
+      "answer": "しぼう",
+      "answerLength": 3,
+      "category": "油脂・セッケン",
+      "family": "oil_state",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "常温で固体の油脂。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "fatty_oil",
+      "displayName": "脂肪油",
+      "answer": "しぼうゆ",
+      "answerLength": 4,
+      "category": "油脂・セッケン",
+      "family": "oil_state",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "常温で液体の油脂。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "drying_oil",
+      "displayName": "乾性油",
+      "answer": "かんせいゆ",
+      "answerLength": 5,
+      "category": "油脂・セッケン",
+      "family": "oil_property",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "空気中で酸化され、乾いて固まりやすい脂肪油。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "nondrying_oil",
+      "displayName": "不乾性油",
+      "answer": "ふかんせいゆ",
+      "answerLength": 6,
+      "category": "油脂・セッケン",
+      "family": "oil_property",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "二重結合が比較的少なく、空気中で固まりにくい脂肪油。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "hardened_oil",
+      "displayName": "硬化油",
+      "answer": "こうかゆ",
+      "answerLength": 4,
+      "category": "油脂・セッケン",
+      "family": "oil_property",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "不飽和結合に水素を付加し、融点を高くした油脂。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "saponification",
+      "displayName": "けん化",
+      "answer": "けんか",
+      "answerLength": 3,
+      "category": "油脂・セッケン",
+      "family": "saponification",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "reaction",
+          "text": "油脂やエステルを強塩基で加水分解する反応。油脂ではセッケンを生じる。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "B",
+      "selectionWeight": 2
+    },
+    {
+      "id": "soap",
+      "displayName": "セッケン",
+      "answer": "せっけん",
+      "answerLength": 4,
+      "category": "油脂・セッケン",
+      "family": "soap",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "高級脂肪酸のナトリウム塩またはカリウム塩からなる界面活性剤。"
+        }
+      ],
+      "sourceKeys": [
+        "tryit",
+        "kimika_oil"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "iodine_value",
+      "displayName": "ヨウ素価",
+      "answer": "ようそか",
+      "answerLength": 4,
+      "category": "油脂・セッケン",
+      "family": "oil_value",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "油脂100 gに付加するヨウ素の質量(g)で、不飽和度の目安となる値。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "A",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    },
+    {
+      "id": "saponification_value",
+      "displayName": "けん化価",
+      "answer": "けんかか",
+      "answerLength": 4,
+      "category": "油脂・セッケン",
+      "family": "oil_value",
+      "enabledByDefault": true,
+      "aliases": [],
+      "clues": [
+        {
+          "level": 1,
+          "type": "definition",
+          "text": "油脂1 gをけん化するのに必要なKOHの質量(mg)で表す値。"
+        }
+      ],
+      "sourceKeys": [
+        "kimika_oil",
+        "kimika"
+      ],
+      "note": "",
+      "learningPriority": "B",
+      "crosswordPriority": "A",
+      "selectionWeight": 3
+    }
+  ]
+}

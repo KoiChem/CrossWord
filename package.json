@@ -1,0 +1,12 @@
+{
+  "name": "crossword-organic-chemistry",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/data/*.test.js tests/generator/*.test.js",
+    "test:stress": "RUN_STRESS=1 node --test tests/generator/stress.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
