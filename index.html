@@ -16,7 +16,7 @@
         <p class="eyebrow">ORGANIC CHEMISTRY PUZZLE</p>
         <h1>有機化学クロスワード</h1>
         <p class="lede">
-          Phase 1 · 脂肪族100語から、毎回異なる連結クロスワードを生成します。
+          脂肪族100語から、毎回異なる連結クロスワードを生成します。
         </p>
       </header>
 
@@ -43,7 +43,7 @@
         </label>
 
         <p id="seed-help" class="field-help">
-          同じseed・データ版・設定なら同じ盤面になります。
+          同じseed・データ版・設定・出題履歴なら同じ盤面になります。直近6盤面の語は次回以降出にくくなります。
         </p>
 
         <div class="actions">
@@ -60,7 +60,17 @@
         教材データを読み込んでいます。
       </p>
 
-      <section id="puzzle-output" class="puzzle-output" aria-live="polite"></section>
+      <section id="puzzle-output" class="puzzle-output"></section>
+      <textarea
+        id="ime-input"
+        class="ime-input"
+        aria-label="選択中のマスへの入力"
+        autocomplete="off"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
+        lang="ja"
+      ></textarea>
     </main>
 
     <script type="module" src="./src/app.js"></script>

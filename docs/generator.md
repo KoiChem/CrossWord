@@ -1,4 +1,4 @@
-# Phase 1 Generator
+# Generator
 
 ## 入力データ
 
@@ -28,6 +28,15 @@ familyは化学分類ではなく、似た名称・似た出題が同じ盤面�
 グループである。EASYは同じfamilyを1語まで、NORMAL/HARDは2語まで許す。
 2語目は品質スコアで軽く減点し、3語目は候補にしない。
 
+## 直近出題語の抑制
+
+ブラウザのlocalStorageに直近6盤面の用語IDだけを保存する。次の盤面では、最新の
+盤面で使った語の選択重みを18%に下げ、1盤面古くなるごとに30%、42%、54%、66%、
+78%へ緩める。完全除外にはしないため、盤面サイズ・family・交差制約を満たす語が
+不足する場合でも生成は止まらない。
+
+履歴はサーバーへ送信しない。同じ盤面を画面内で再生成しても、履歴に重複記録しない。
+
 ## 品質選択
 
 必須制約を満たした盤面だけを比較する。スコアは語数、交差、compactness、
@@ -37,13 +46,14 @@ family超過の順で評価する。上位8候補が目標語数に到達した�
 ## seedと再現
 
 通常は暗号学的乱数から32bit seedを作る。Generator内のランダム処理はすべて
-seed付きPRNGを使う。同じseed、データ版、Generator版、プリセットなら同じ盤面を
-再現できる。生成結果にはseed、盤面fingerprint、探索ノード数、停止理由を残す。
+seed付きPRNGを使う。同じseed、データ版、Generator版、プリセット、出題履歴なら
+同じ盤面を再現できる。生成結果にはseed、盤面fingerprint、出題履歴の署名、探索
+ノード数、停止理由を残す。
 
 ## 実行上限
 
 探索は候補プール3回、restart最大12回、総探索ノード40,000件までで停止する。
 ただし目標語数を満たす上位8候補が得られたら、無制限に品質を掘り続けずに終了する。
-Phase 1のテストは通常時に node --test tests/data/*.test.js
-tests/generator/*.test.js を実行する。1000回検証では
+通常テストは node --test tests/data/*.test.js tests/generator/*.test.js
+tests/history/*.test.js tests/player/*.test.js を実行する。1000回検証では
 RUN_STRESS=1 node --test tests/generator/stress.test.js を実行する。

@@ -30,7 +30,12 @@ function isWithinFamilyLimit(term, selected, maxFamilyCount) {
   );
 }
 
-function anchorWeight(term, crossingIndex, config) {
+function selectionMultiplier(term, selectionWeights) {
+  const value = Number(selectionWeights?.[term.id]);
+  return Number.isFinite(value) ? Math.max(0, value) : 1;
+}
+
+function anchorWeight(term, crossingIndex, config, selectionWeights) {
   const length = Array.from(term.answer).length;
   const preferredLength = Math.max(4, Math.floor(config.width * 0.62));
   const lengthFactor = Math.max(
@@ -38,14 +43,24 @@ function anchorWeight(term, crossingIndex, config) {
     1 - Math.abs(length - preferredLength) / config.width,
   );
   const degreeFactor = Math.sqrt(crossingDegree(crossingIndex, term.id) + 1);
-  return baseSelectionWeight(term) * lengthFactor * degreeFactor;
+  return (
+    baseSelectionWeight(term) *
+    lengthFactor *
+    degreeFactor *
+    selectionMultiplier(term, selectionWeights)
+  );
 }
 
-function candidateWeight(candidate, anchor, crossingIndex) {
+function candidateWeight(candidate, anchor, crossingIndex, selectionWeights) {
   const sameCategory = candidate.category === anchor.category;
   const categoryFactor = sameCategory ? 1.7 : 1;
   const degreeFactor = Math.sqrt(crossingDegree(crossingIndex, candidate.id) + 1);
-  return baseSelectionWeight(candidate) * categoryFactor * degreeFactor;
+  return (
+    baseSelectionWeight(candidate) *
+    categoryFactor *
+    degreeFactor *
+    selectionMultiplier(candidate, selectionWeights)
+  );
 }
 
 export function getEligibleTerms(terms, config, crossingIndex) {
@@ -60,7 +75,13 @@ export function getEligibleTerms(terms, config, crossingIndex) {
   });
 }
 
-export function selectCandidatePool(terms, config, crossingIndex, random) {
+export function selectCandidatePool(
+  terms,
+  config,
+  crossingIndex,
+  random,
+  selectionWeights = null,
+) {
   const eligible = getEligibleTerms(terms, config, crossingIndex);
 
   if (eligible.length < config.minWords) {
@@ -68,7 +89,7 @@ export function selectCandidatePool(terms, config, crossingIndex, random) {
   }
 
   const anchor = random.weightedPick(eligible, (term) =>
-    anchorWeight(term, crossingIndex, config),
+    anchorWeight(term, crossingIndex, config, selectionWeights),
   );
   const selected = [anchor];
   const remaining = eligible.filter((term) => term.id !== anchor.id);
@@ -85,7 +106,7 @@ export function selectCandidatePool(terms, config, crossingIndex, random) {
     }
 
     const next = random.weightedPick(candidates, (term) =>
-      candidateWeight(term, anchor, crossingIndex),
+      candidateWeight(term, anchor, crossingIndex, selectionWeights),
     );
     selected.push(next);
     remaining.splice(

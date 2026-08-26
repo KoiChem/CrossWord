@@ -369,7 +369,24 @@ function generateFromPool(pool, context) {
   }
 }
 
-export function generatePuzzle({ terms, config, seed = createRandomSeed() }) {
+function recencyFingerprint(selectionWeights) {
+  return hashText(
+    Object.entries(selectionWeights || {})
+      .filter(([, value]) => Number(value) !== 1)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([id, value]) => id + ":" + String(value))
+      .join("|"),
+  )
+    .toString(16)
+    .padStart(8, "0");
+}
+
+export function generatePuzzle({
+  terms,
+  config,
+  seed = createRandomSeed(),
+  selectionWeights = null,
+}) {
   assertValidDataset({ entries: terms });
 
   const random = new SeededRandom(seed);
@@ -401,7 +418,13 @@ export function generatePuzzle({ terms, config, seed = createRandomSeed() }) {
       break;
     }
 
-    const pool = selectCandidatePool(terms, config, crossingIndex, random);
+    const pool = selectCandidatePool(
+      terms,
+      config,
+      crossingIndex,
+      random,
+      selectionWeights,
+    );
     generateFromPool(pool, context);
 
     if (hasEnoughTargetCandidates(context)) {
@@ -429,7 +452,8 @@ export function generatePuzzle({ terms, config, seed = createRandomSeed() }) {
       nodeCount: context.nodeCount,
       restartCount: context.restartCount,
       stopReason: context.stopReason,
-      generatorVersion: "phase1-v1",
+      generatorVersion: "phase2-v1",
+      recencyFingerprint: recencyFingerprint(selectionWeights),
     },
   };
   const validation = validateGeneratedPuzzle(result, terms, config);

@@ -6,7 +6,10 @@ import { getPuzzlePreset } from "./config/puzzle-presets.js";
 import { generatePuzzle } from "./generator/generate-puzzle.js";
 import { createRandomSeed } from "./generator/seeded-random.js";
 import { validateDataset } from "./generator/validator.js";
-import { renderGeneratorDebug } from "./ui/render-generator-debug.js";
+import { createRecentTermHistory } from "./history/recent-term-history.js";
+import { createImeInputController } from "./player/input-controller.js";
+import { createPuzzleState } from "./player/puzzle-state.js";
+import { renderPlayer } from "./ui/render-player.js";
 
 const presetSelect = document.querySelector("#preset-select");
 const seedInput = document.querySelector("#seed-input");
@@ -14,8 +17,14 @@ const generateButton = document.querySelector("#generate-button");
 const newSeedButton = document.querySelector("#new-seed-button");
 const statusMessage = document.querySelector("#status-message");
 const puzzleOutput = document.querySelector("#puzzle-output");
+const imeInput = document.querySelector("#ime-input");
 
 let dataset;
+let player;
+let imeController;
+let recentTermHistory;
+let lastGenerationRequestKey = null;
+let lastSelectionWeights = null;
 
 function setStatus(message, isError = false) {
   statusMessage.textContent = message;
@@ -33,6 +42,64 @@ function ensureSeed() {
   return generated;
 }
 
+function currentGenerationRequestKey(config, seed) {
+  return config.id + ":" + String(seed);
+}
+
+function generationHistoryKey(puzzle, config) {
+  return [
+    dataset.meta?.version || "data",
+    config.id,
+    puzzle.debug.seed,
+    puzzle.debug.fingerprint,
+  ].join(":");
+}
+
+function renderPlayerState() {
+  if (!player) {
+    return;
+  }
+
+  renderPlayer(puzzleOutput, player, {
+    onCellSelect(row, col) {
+      updatePlayer(player.selectCell(row, col), true);
+    },
+    onWordSelect(wordId) {
+      updatePlayer(player.selectWord(wordId, { firstOpenCell: true }), true);
+    },
+    onToggleDirection() {
+      updatePlayer(player.toggleDirection(), true);
+    },
+    onReset() {
+      updatePlayer(player.reset(), false, "入力をリセットしました。");
+    },
+  });
+}
+
+function updatePlayer(result, focusInput = false, message = "") {
+  if (!result.changed && result.newlyCorrectWordIds.length === 0) {
+    return;
+  }
+
+  renderPlayerState();
+  const progress = player.getProgress();
+  const newlyCorrectNames = result.newlyCorrectWordIds
+    .map((wordId) => dataset.entries.find((term) => term.id === wordId)?.displayName)
+    .filter(Boolean);
+
+  if (result.completed) {
+    setStatus("COMPLETE！ " + progress.total + "問すべて正解です。");
+  } else if (newlyCorrectNames.length > 0) {
+    setStatus(newlyCorrectNames.join("・") + " が正解！ " + progress.correct + " / " + progress.total + "問完成");
+  } else if (message) {
+    setStatus(message);
+  }
+
+  if (focusInput) {
+    imeController.focus();
+  }
+}
+
 function generateAndRender() {
   if (!dataset) {
     return;
@@ -42,19 +109,42 @@ function generateAndRender() {
     generateButton.disabled = true;
     const config = getPuzzlePreset(presetSelect.value);
     const seed = ensureSeed();
+    const requestKey = currentGenerationRequestKey(config, seed);
+    const selectionWeights =
+      requestKey === lastGenerationRequestKey
+        ? lastSelectionWeights
+        : recentTermHistory.getWeights();
+    const recentPuzzleCount = recentTermHistory.getPuzzles().length;
     const puzzle = generatePuzzle({
       terms: getEnabledEntries(dataset),
       config,
       seed,
+      selectionWeights,
     });
-    renderGeneratorDebug(puzzleOutput, puzzle, dataset);
+    player = createPuzzleState(puzzle, dataset.entries);
+    lastGenerationRequestKey = requestKey;
+    lastSelectionWeights = selectionWeights;
+    const suppressedTermCount = Object.keys(selectionWeights).length;
+    recentTermHistory.recordPuzzle(
+      puzzle.selectedTermIds,
+      generationHistoryKey(puzzle, config),
+    );
+    renderPlayerState();
     setStatus(
       config.label +
         "を生成しました。seed " +
         puzzle.debug.seed +
         " · " +
         puzzle.placements.length +
-        "語",
+        "語" +
+        (suppressedTermCount > 0
+          ?
+            " · 直近" +
+            recentPuzzleCount +
+            "盤面の" +
+            suppressedTermCount +
+            "語を出にくくしています"
+          : ""),
     );
   } catch (error) {
     puzzleOutput.replaceChildren();
@@ -76,6 +166,21 @@ async function initialize() {
       throw new Error(validation.errors.join("\n"));
     }
 
+    recentTermHistory = createRecentTermHistory();
+    imeController = createImeInputController(imeInput, {
+      onCharacters(characters) {
+        updatePlayer(player?.enterCharacters(characters) || { changed: false, newlyCorrectWordIds: [] }, true);
+      },
+      onBackspace() {
+        updatePlayer(player?.backspace() || { changed: false, newlyCorrectWordIds: [] }, true);
+      },
+      onMove(delta) {
+        updatePlayer(player?.move(delta) || { changed: false, newlyCorrectWordIds: [] }, true);
+      },
+      onToggleDirection() {
+        updatePlayer(player?.toggleDirection() || { changed: false, newlyCorrectWordIds: [] }, true);
+      },
+    });
     seedInput.value = String(createRandomSeed());
     generateAndRender();
   } catch (error) {
