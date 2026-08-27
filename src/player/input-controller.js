@@ -14,7 +14,13 @@ export function createImeInputController(input, handlers) {
 
     if (characters.length > 0) {
       handlers.onCharacters(characters);
+    } else {
+      handlers.onCompositionPreview?.([]);
     }
+  }
+
+  function preview(value) {
+    handlers.onCompositionPreview?.(normalizeAnswerInput(value));
   }
 
   function focus() {
@@ -27,6 +33,11 @@ export function createImeInputController(input, handlers) {
 
   input.addEventListener("compositionstart", () => {
     composing = true;
+    preview(input.value);
+  });
+
+  input.addEventListener("compositionupdate", (event) => {
+    preview(input.value || event.data || "");
   });
 
   input.addEventListener("compositionend", (event) => {
@@ -40,6 +51,7 @@ export function createImeInputController(input, handlers) {
 
   input.addEventListener("input", (event) => {
     if (composing || event.isComposing) {
+      preview(input.value || event.data || "");
       return;
     }
 
@@ -83,5 +95,9 @@ export function createImeInputController(input, handlers) {
     }
   });
 
-  return { focus };
+  function blur() {
+    input.blur?.();
+  }
+
+  return { focus, blur };
 }

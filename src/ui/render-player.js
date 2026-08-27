@@ -25,7 +25,37 @@ function wordStartNumbers(player) {
   return numbers;
 }
 
-function renderBoard(player, onCellSelect) {
+function describeCell(player, row, col, startNumbers) {
+  const key = row + ":" + col;
+  return (
+    row +
+    1 +
+    "行" +
+    (col + 1) +
+    "列" +
+    (startNumbers.has(key) ? "、問題" + startNumbers.get(key) : "") +
+    (player.getCellInput(row, col) ? "、入力済み" : "、未入力") +
+    "。1回タップでヒントを表示、もう一度タップで入力します。"
+  );
+}
+
+function applyBoardCellState(cellButton, player, row, col, activeKeys, activeCellKey, startNumbers) {
+  const key = row + ":" + col;
+  const preview = player.getCellPreview(row, col);
+  const letter = player.getCellDisplayInput(row, col);
+  const letterElement = cellButton.querySelector(".board-cell-letter");
+
+  cellButton.classList.toggle("board-cell--active-word", activeKeys.has(key));
+  cellButton.classList.toggle("board-cell--active", key === activeCellKey);
+  cellButton.classList.toggle("board-cell--confirmed", player.isCellLocked(key));
+  cellButton.classList.toggle("board-cell--preview", Boolean(preview));
+  cellButton.setAttribute("aria-pressed", String(key === activeCellKey));
+  cellButton.setAttribute("aria-label", describeCell(player, row, col, startNumbers));
+  letterElement.textContent = letter;
+  letterElement.classList.toggle("board-cell-letter--preview", Boolean(preview));
+}
+
+function renderBoard(player, onCellTap) {
   const board = player.puzzle.board;
   const activeKeys = activeWordCellKeys(player);
   const activeCellKey = player.getActiveCellKey();
@@ -50,27 +80,7 @@ function renderBoard(player, onCellSelect) {
       cellButton.type = "button";
       cellButton.dataset.row = String(row);
       cellButton.dataset.col = String(col);
-      cellButton.setAttribute("aria-pressed", String(key === activeCellKey));
-      cellButton.setAttribute(
-        "aria-label",
-        row +
-          1 +
-          "行" +
-          (col + 1) +
-          "列" +
-          (startNumbers.has(key) ? "、問題" + startNumbers.get(key) : "") +
-          (player.getCellInput(row, col) ? "、入力済み" : "、未入力"),
-      );
-
-      if (activeKeys.has(key)) {
-        cellButton.classList.add("board-cell--active-word");
-      }
-      if (key === activeCellKey) {
-        cellButton.classList.add("board-cell--active");
-      }
-      if (player.isCellLocked(key)) {
-        cellButton.classList.add("board-cell--confirmed");
-      }
+      cellButton.dataset.cellKey = key;
       if (cell.acrossId && cell.downId) {
         cellButton.classList.add("board-cell--crossing");
       }
@@ -80,13 +90,22 @@ function renderBoard(player, onCellSelect) {
         cellButton.append(element("span", "board-cell-number", String(number)));
       }
 
-      cellButton.append(
-        element("span", "board-cell-letter", player.getCellInput(row, col)),
+      cellButton.append(element("span", "board-cell-letter"));
+      applyBoardCellState(
+        cellButton,
+        player,
+        row,
+        col,
+        activeKeys,
+        activeCellKey,
+        startNumbers,
       );
-      cellButton.addEventListener("click", () => onCellSelect(row, col));
+      cellButton.addEventListener("click", () => onCellTap(row, col));
       boardElement.append(cellButton);
     }
   }
+
+  boardElement.addEventListener("dblclick", (event) => event.preventDefault());
 
   return boardElement;
 }
@@ -124,7 +143,25 @@ function renderClueList(player, direction, onWordSelect) {
   return section;
 }
 
-function renderCurrentClue(player, onToggleDirection) {
+function renderDirectionButton(player, direction, onSelectDirection) {
+  const word = player.getActiveWord();
+  const button = element(
+    "button",
+    "direction-button",
+    direction === "across" ? "ヨコ" : "タテ",
+  );
+  const availableDirections = player.getAvailableDirections();
+  button.type = "button";
+  button.disabled = !availableDirections.includes(direction);
+  button.setAttribute("aria-pressed", String(word?.direction === direction));
+  if (word?.direction === direction) {
+    button.classList.add("direction-button--active");
+  }
+  button.addEventListener("click", () => onSelectDirection(direction));
+  return button;
+}
+
+function renderCurrentClue(player, callbacks) {
   const word = player.getActiveWord();
   const progress = player.getProgress();
   const panel = element("section", "current-clue-panel");
@@ -133,20 +170,6 @@ function renderCurrentClue(player, onToggleDirection) {
     return panel;
   }
 
-  const switchLabel = word.direction === "across" ? "タテに切替" : "ヨコに切替";
-  const canSwitch = player.puzzle.board.cells.some((cell, index) => {
-    if (!cell) {
-      return false;
-    }
-    const row = Math.floor(index / player.puzzle.board.width);
-    const col = index % player.puzzle.board.width;
-    return (
-      row + ":" + col === player.getActiveCellKey() &&
-      cell.acrossId &&
-      cell.downId
-    );
-  });
-
   panel.append(
     element("p", "current-clue-kicker", word.directionLabel + " " + word.number),
     element("h2", null, word.clue.text),
@@ -154,12 +177,41 @@ function renderCurrentClue(player, onToggleDirection) {
   );
 
   const controls = element("div", "player-controls");
-  const switchButton = element("button", "secondary-button", switchLabel);
-  switchButton.type = "button";
-  switchButton.disabled = !canSwitch;
-  switchButton.addEventListener("click", onToggleDirection);
-  controls.append(switchButton);
+  const directionControl = element("div", "direction-switch");
+  directionControl.setAttribute("role", "group");
+  directionControl.setAttribute("aria-label", "単語の方向");
+  directionControl.append(
+    renderDirectionButton(player, "across", callbacks.onSelectDirection),
+    renderDirectionButton(player, "down", callbacks.onSelectDirection),
+  );
+
+  const isInputMode = player.getMode() === "input";
+  const inputButton = element(
+    "button",
+    isInputMode ? "secondary-button input-mode-button" : "primary-button input-mode-button",
+    isInputMode ? "入力を終える" : "入力する",
+  );
+  inputButton.type = "button";
+  inputButton.dataset.inputAction = isInputMode ? "end" : "start";
+  inputButton.addEventListener("click", () => {
+    if (isInputMode) {
+      callbacks.onExitInputMode();
+    } else {
+      callbacks.onEnterInputMode();
+    }
+  });
+  controls.append(directionControl, inputButton);
   panel.append(controls);
+
+  panel.append(
+    element(
+      "p",
+      "input-mode-message",
+      isInputMode
+        ? "入力中です。盤面をタップすると入力位置を移動できます。"
+        : "マスを1回タップでヒント表示。選択中の単語をもう一度タップ、または「入力する」で入力します。",
+    ),
+  );
 
   const progressLabel = progress.correct + " / " + progress.total + " 問完成";
   const progressElement = document.createElement("progress");
@@ -178,12 +230,12 @@ export function renderPlayer(container, player, callbacks) {
   const boardSection = element("section", "board-section player-board-section");
   boardSection.append(
     element("h2", null, "クロスワードを解こう"),
-    element("p", "board-meta", "マスをタップして入力。交差マスをもう一度タップするとタテ／ヨコを切り替えます。"),
-    renderBoard(player, callbacks.onCellSelect),
+    element("p", "board-meta", "ヒントを読んでから、選択中の単語をもう一度タップして入力します。交差マスの方向は、ヒント欄のヨコ／タテで選べます。"),
+    renderBoard(player, callbacks.onCellTap),
   );
 
   const information = element("aside", "player-information");
-  information.append(renderCurrentClue(player, callbacks.onToggleDirection));
+  information.append(renderCurrentClue(player, callbacks));
 
   const resetButton = element("button", "text-button", "入力をリセット");
   resetButton.type = "button";
@@ -194,13 +246,17 @@ export function renderPlayer(container, player, callbacks) {
   layout.append(boardSection, information);
   container.append(layout);
 
-  const clueLayout = element("section", "clue-panel");
-  clueLayout.setAttribute("aria-label", "問題一覧");
+  const cluePanel = element("details", "clue-panel");
+  cluePanel.setAttribute("aria-label", "問題一覧");
+  cluePanel.open = !window.matchMedia("(max-width: 700px)").matches;
+  cluePanel.append(element("summary", "clue-panel-summary", "問題一覧"));
+  const clueLayout = element("div", "clue-panel-content");
   clueLayout.append(
     renderClueList(player, "across", callbacks.onWordSelect),
     renderClueList(player, "down", callbacks.onWordSelect),
   );
-  container.append(clueLayout);
+  cluePanel.append(clueLayout);
+  container.append(cluePanel);
 
   if (player.isComplete()) {
     const complete = element("section", "complete-panel");
@@ -212,4 +268,38 @@ export function renderPlayer(container, player, callbacks) {
     );
     container.append(complete);
   }
+}
+
+/**
+ * IME composition and one-character input happen frequently.  Replacing the
+ * complete player tree there can disturb a mobile keyboard, so only board cell
+ * content and selection styling are patched while the active clue is unchanged.
+ */
+export function patchPlayerBoard(container, player) {
+  const boardElement = container.querySelector(".crossword-board--player");
+  if (!boardElement) {
+    return false;
+  }
+
+  const activeKeys = activeWordCellKeys(player);
+  const activeCellKey = player.getActiveCellKey();
+  const startNumbers = wordStartNumbers(player);
+
+  for (const cellButton of boardElement.querySelectorAll(
+    ".board-cell--filled[data-row][data-col]",
+  )) {
+    const row = Number(cellButton.dataset.row);
+    const col = Number(cellButton.dataset.col);
+    applyBoardCellState(
+      cellButton,
+      player,
+      row,
+      col,
+      activeKeys,
+      activeCellKey,
+      startNumbers,
+    );
+  }
+
+  return true;
 }

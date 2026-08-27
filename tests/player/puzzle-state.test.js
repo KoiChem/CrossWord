@@ -34,13 +34,37 @@ function createPuzzle() {
   };
 }
 
-test("交差マスを連続選択するとタテ・ヨコを切り替える", () => {
+test("交差マスは選択中の方向を維持し、明示操作でタテ・ヨコを切り替える", () => {
   const state = createPuzzleState(createPuzzle(), terms);
   state.selectWord("across");
   state.selectCell(1, 1);
   assert.equal(state.getActiveWord().id, "across");
   state.selectCell(1, 1);
+  assert.equal(state.getActiveWord().id, "across");
+  state.selectDirection("down");
   assert.equal(state.getActiveWord().id, "down");
+});
+
+test("閲覧モードと入力モードを分け、IMEプレビューは確定回答を変えない", () => {
+  const state = createPuzzleState(createPuzzle(), terms);
+
+  assert.equal(state.getMode(), "browse");
+  state.selectWord("across");
+  state.enterInputMode();
+  assert.equal(state.getMode(), "input");
+
+  state.setCompositionPreview(["あ", "い"]);
+  assert.equal(state.getCellInput(1, 0), "");
+  assert.equal(state.getCellDisplayInput(1, 0), "あ");
+  assert.equal(state.getCellDisplayInput(1, 1), "い");
+
+  state.enterCharacters(["あ", "い"]);
+  assert.equal(state.getCellInput(1, 0), "あ");
+  assert.equal(state.getCellInput(1, 1), "い");
+  assert.equal(state.getCellPreview(1, 0), "");
+
+  state.exitInputMode();
+  assert.equal(state.getMode(), "browse");
 });
 
 test("入力した正解語を固定し、交差語の完成で全問正解になる", () => {

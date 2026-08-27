@@ -62,6 +62,7 @@ export function createPuzzleState(puzzle, terms) {
   const wordById = new Map(words.map((word) => [word.id, word]));
   const wordIdsByCell = new Map();
   const inputByCell = new Map();
+  const compositionPreviewByCell = new Map();
   const correctWordIds = new Set();
 
   for (const word of words) {
@@ -74,6 +75,7 @@ export function createPuzzleState(puzzle, terms) {
 
   let activeWordId = words[0]?.id || null;
   let activeCellKey = words[0]?.cells[0]?.key || null;
+  let mode = "browse";
 
   function getActiveWord() {
     return wordById.get(activeWordId) || null;
@@ -110,18 +112,29 @@ export function createPuzzleState(puzzle, terms) {
     };
   }
 
+  function clearCompositionPreview() {
+    const changed = compositionPreviewByCell.size > 0;
+    compositionPreviewByCell.clear();
+    return changed;
+  }
+
   function selectWord(wordId, options = {}) {
     const word = wordById.get(wordId);
     if (!word) {
       return result(false);
     }
 
+    const previewChanged = clearCompositionPreview();
+    const previousWordId = activeWordId;
+    const previousCellKey = activeCellKey;
     activeWordId = word.id;
     const firstOpenCell = options.firstOpenCell
       ? word.cells.find((cell) => !inputByCell.get(cell.key) && !isCellLocked(cell.key))
       : null;
     activeCellKey = (firstOpenCell || word.cells[0]).key;
-    return result(true);
+    return result(
+      previewChanged || previousWordId !== activeWordId || previousCellKey !== activeCellKey,
+    );
   }
 
   function selectCell(row, col) {
@@ -137,28 +150,93 @@ export function createPuzzleState(puzzle, terms) {
     const activeWord = getActiveWord();
     let direction = activeWord?.direction;
 
-    if (key === activeCellKey && availableDirections.length === 2) {
-      direction = direction === "across" ? "down" : "across";
-    }
-
     if (!availableDirections.includes(direction)) {
       direction = availableDirections[0];
     }
 
+    const previewChanged = clearCompositionPreview();
+    const previousWordId = activeWordId;
+    const previousCellKey = activeCellKey;
     activeWordId = boardCell[direction + "Id"];
     activeCellKey = key;
-    return result(true);
+    return result(
+      previewChanged || previousWordId !== activeWordId || previousCellKey !== activeCellKey,
+    );
+  }
+
+  function selectDirection(direction) {
+    if (direction !== "across" && direction !== "down") {
+      return result(false);
+    }
+
+    const activeWord = getActiveWord();
+    const activeCell = activeWord?.cells.find((cell) => cell.key === activeCellKey);
+    const boardCell = activeCell && getCell(puzzle.board, activeCell.row, activeCell.col);
+    const nextWordId = boardCell?.[direction + "Id"];
+
+    if (!nextWordId) {
+      return result(false);
+    }
+
+    const previewChanged = clearCompositionPreview();
+    const changed = previewChanged || activeWordId !== nextWordId;
+    activeWordId = nextWordId;
+    return result(changed);
   }
 
   function toggleDirection() {
     const activeWord = getActiveWord();
-    const activeCell = activeWord?.cells.find((cell) => cell.key === activeCellKey);
+    return selectDirection(activeWord?.direction === "across" ? "down" : "across");
+  }
 
-    if (!activeCell) {
+  function enterInputMode() {
+    if (!getActiveWord() || mode === "input") {
       return result(false);
     }
 
-    return selectCell(activeCell.row, activeCell.col);
+    mode = "input";
+    return result(true);
+  }
+
+  function exitInputMode() {
+    const previewChanged = clearCompositionPreview();
+    if (mode !== "input" && !previewChanged) {
+      return result(false);
+    }
+
+    mode = "browse";
+    return result(true);
+  }
+
+  function setCompositionPreview(characters) {
+    const activeWord = getActiveWord();
+    if (!activeWord || !Array.isArray(characters)) {
+      return result(false);
+    }
+
+    const before = JSON.stringify([...compositionPreviewByCell]);
+    compositionPreviewByCell.clear();
+    let index = Math.max(
+      0,
+      activeWord.cells.findIndex((cell) => cell.key === activeCellKey),
+    );
+
+    for (const character of characters) {
+      const cell = activeWord.cells[index];
+      if (!cell) {
+        break;
+      }
+
+      if (!isCellLocked(cell.key)) {
+        compositionPreviewByCell.set(cell.key, character);
+      }
+
+      if (index < activeWord.cells.length - 1) {
+        index += 1;
+      }
+    }
+
+    return result(before !== JSON.stringify([...compositionPreviewByCell]));
   }
 
   function enterCharacters(characters) {
@@ -167,6 +245,7 @@ export function createPuzzleState(puzzle, terms) {
       return result(false);
     }
 
+    const previewChanged = clearCompositionPreview();
     let index = Math.max(
       0,
       activeWord.cells.findIndex((cell) => cell.key === activeCellKey),
@@ -190,7 +269,7 @@ export function createPuzzleState(puzzle, terms) {
     }
 
     activeCellKey = activeWord.cells[index].key;
-    return result(changed, confirmCompletedWords());
+    return result(changed || previewChanged, confirmCompletedWords());
   }
 
   function backspace() {
@@ -246,9 +325,11 @@ export function createPuzzleState(puzzle, terms) {
 
   function reset() {
     inputByCell.clear();
+    compositionPreviewByCell.clear();
     correctWordIds.clear();
     activeWordId = words[0]?.id || null;
     activeCellKey = words[0]?.cells[0]?.key || null;
+    mode = "browse";
     return result(true);
   }
 
@@ -257,7 +338,11 @@ export function createPuzzleState(puzzle, terms) {
     words,
     selectCell,
     selectWord,
+    selectDirection,
     toggleDirection,
+    enterInputMode,
+    exitInputMode,
+    setCompositionPreview,
     enterCharacters,
     backspace,
     move,
@@ -266,8 +351,29 @@ export function createPuzzleState(puzzle, terms) {
     getActiveCellKey() {
       return activeCellKey;
     },
+    getMode() {
+      return mode;
+    },
+    getAvailableDirections() {
+      const activeWord = getActiveWord();
+      const activeCell = activeWord?.cells.find((cell) => cell.key === activeCellKey);
+      const boardCell = activeCell && getCell(puzzle.board, activeCell.row, activeCell.col);
+      return ["across", "down"].filter((direction) =>
+        Boolean(boardCell?.[direction + "Id"]),
+      );
+    },
     getCellInput(row, col) {
       return inputByCell.get(cellKey(row, col)) || "";
+    },
+    getCellPreview(row, col) {
+      return compositionPreviewByCell.get(cellKey(row, col)) || "";
+    },
+    getCellDisplayInput(row, col) {
+      return (
+        compositionPreviewByCell.get(cellKey(row, col)) ||
+        inputByCell.get(cellKey(row, col)) ||
+        ""
+      );
     },
     isCellLocked,
     isWordCorrect(wordId) {

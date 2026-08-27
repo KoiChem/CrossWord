@@ -9,7 +9,8 @@ import { validateDataset } from "./generator/validator.js";
 import { createRecentTermHistory } from "./history/recent-term-history.js";
 import { createImeInputController } from "./player/input-controller.js";
 import { createPuzzleState } from "./player/puzzle-state.js";
-import { renderPlayer } from "./ui/render-player.js";
+import { createTapController } from "./player/tap-controller.js";
+import { patchPlayerBoard, renderPlayer } from "./ui/render-player.js";
 
 const presetSelect = document.querySelector("#preset-select");
 const seedInput = document.querySelector("#seed-input");
@@ -25,6 +26,8 @@ let imeController;
 let recentTermHistory;
 let lastGenerationRequestKey = null;
 let lastSelectionWeights = null;
+const tapController = createTapController();
+let viewportRevealFrame = null;
 
 function setStatus(message, isError = false) {
   statusMessage.textContent = message;
@@ -55,33 +58,87 @@ function generationHistoryKey(puzzle, config) {
   ].join(":");
 }
 
-function renderPlayerState() {
+function renderPlayerState(options = {}) {
   if (!player) {
     return;
   }
 
+  if (options.patchBoard && patchPlayerBoard(puzzleOutput, player)) {
+    return;
+  }
+
   renderPlayer(puzzleOutput, player, {
-    onCellSelect(row, col) {
-      updatePlayer(player.selectCell(row, col), true);
+    onCellTap(row, col) {
+      const selection = player.selectCell(row, col);
+      const isDoubleTap =
+        player.getMode() !== "input" &&
+        tapController.register(player.getActiveWord()?.id);
+      const inputMode = isDoubleTap ? player.enterInputMode() : null;
+      const changed = selection.changed || inputMode?.changed;
+
+      if (!changed) {
+        return;
+      }
+
+      updatePlayer(
+        {
+          changed,
+          newlyCorrectWordIds: [],
+          completed: player.isComplete(),
+        },
+        player.getMode() === "input",
+      );
     },
     onWordSelect(wordId) {
-      updatePlayer(player.selectWord(wordId, { firstOpenCell: true }), true);
+      tapController.reset();
+      updatePlayer(
+        player.selectWord(wordId, { firstOpenCell: true }),
+        player.getMode() === "input",
+      );
     },
-    onToggleDirection() {
-      updatePlayer(player.toggleDirection(), true);
+    onSelectDirection(direction) {
+      tapController.reset();
+      updatePlayer(
+        player.selectDirection(direction),
+        player.getMode() === "input",
+      );
+    },
+    onEnterInputMode() {
+      tapController.reset();
+      updatePlayer(player.enterInputMode(), true);
+    },
+    onExitInputMode() {
+      tapController.reset();
+      imeController.blur();
+      updatePlayer(player.exitInputMode());
     },
     onReset() {
+      tapController.reset();
+      imeController.blur();
       updatePlayer(player.reset(), false, "入力をリセットしました。");
     },
   });
 }
 
-function updatePlayer(result, focusInput = false, message = "") {
+function revealActiveInputContext() {
+  if (viewportRevealFrame) {
+    cancelAnimationFrame(viewportRevealFrame);
+  }
+
+  viewportRevealFrame = requestAnimationFrame(() => {
+    viewportRevealFrame = null;
+    puzzleOutput
+      .querySelector(".board-cell--active")
+      ?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  });
+}
+
+function updatePlayer(result, focusInput = false, message = "", options = {}) {
   if (!result.changed && result.newlyCorrectWordIds.length === 0) {
     return;
   }
 
-  renderPlayerState();
+  renderPlayerState({ patchBoard: options.patchBoard });
   const progress = player.getProgress();
   const newlyCorrectNames = result.newlyCorrectWordIds
     .map((wordId) => dataset.entries.find((term) => term.id === wordId)?.displayName)
@@ -97,6 +154,7 @@ function updatePlayer(result, focusInput = false, message = "") {
 
   if (focusInput) {
     imeController.focus();
+    revealActiveInputContext();
   }
 }
 
@@ -122,6 +180,7 @@ function generateAndRender() {
       selectionWeights,
     });
     player = createPuzzleState(puzzle, dataset.entries);
+    tapController.reset();
     lastGenerationRequestKey = requestKey;
     lastSelectionWeights = selectionWeights;
     const suppressedTermCount = Object.keys(selectionWeights).length;
@@ -169,16 +228,46 @@ async function initialize() {
     recentTermHistory = createRecentTermHistory();
     imeController = createImeInputController(imeInput, {
       onCharacters(characters) {
-        updatePlayer(player?.enterCharacters(characters) || { changed: false, newlyCorrectWordIds: [] }, true);
+        if (player?.getMode() !== "input") {
+          return;
+        }
+
+        const result = player.enterCharacters(characters);
+        updatePlayer(result, true, "", {
+          patchBoard:
+            result.newlyCorrectWordIds.length === 0 && !result.completed,
+        });
+      },
+      onCompositionPreview(characters) {
+        if (player?.getMode() !== "input") {
+          return;
+        }
+
+        updatePlayer(player.setCompositionPreview(characters), true, "", {
+          patchBoard: true,
+        });
       },
       onBackspace() {
-        updatePlayer(player?.backspace() || { changed: false, newlyCorrectWordIds: [] }, true);
+        if (player?.getMode() !== "input") {
+          return;
+        }
+
+        updatePlayer(player.backspace(), true, "", { patchBoard: true });
       },
       onMove(delta) {
-        updatePlayer(player?.move(delta) || { changed: false, newlyCorrectWordIds: [] }, true);
+        if (player?.getMode() !== "input") {
+          return;
+        }
+
+        updatePlayer(player.move(delta), true, "", { patchBoard: true });
       },
       onToggleDirection() {
-        updatePlayer(player?.toggleDirection() || { changed: false, newlyCorrectWordIds: [] }, true);
+        if (player?.getMode() !== "input") {
+          return;
+        }
+
+        tapController.reset();
+        updatePlayer(player.toggleDirection(), true);
       },
     });
     seedInput.value = String(createRandomSeed());
@@ -197,6 +286,12 @@ generateButton.addEventListener("click", generateAndRender);
 newSeedButton.addEventListener("click", () => {
   seedInput.value = String(createRandomSeed());
   generateAndRender();
+});
+
+window.visualViewport?.addEventListener("resize", () => {
+  if (player?.getMode() === "input") {
+    revealActiveInputContext();
+  }
 });
 
 initialize();
