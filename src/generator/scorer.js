@@ -120,6 +120,9 @@ export function scorePuzzle(puzzle, termById, corpusTerms, config) {
     (sum, count) => sum + Math.max(0, count - config.softFamilyCount),
     0,
   );
+  const minimumConnectedCrossings = Math.max(0, placedTerms.length - 1);
+  const extraCrossingCount = Math.max(0, crossingCount - minimumConnectedCrossings);
+  const targetExtraCrossings = Math.max(0, config.targetExtraCrossings || 0);
   const metrics = {
     wordCoverage: clamp01(placedTerms.length / config.targetWords),
     crossingQuality: clamp01(crossingCount / Math.max(1, placedTerms.length)),
@@ -136,6 +139,15 @@ export function scorePuzzle(puzzle, termById, corpusTerms, config) {
     familyPenalty,
     placedWordCount: placedTerms.length,
     crossingCount,
+    minimumConnectedCrossings,
+    extraCrossingCount,
+    extraCrossingTarget: targetExtraCrossings,
+    extraCrossingTargetMet:
+      targetExtraCrossings === 0 || extraCrossingCount >= targetExtraCrossings,
+    extraCrossingQuality:
+      targetExtraCrossings === 0
+        ? 1
+        : clamp01(extraCrossingCount / targetExtraCrossings),
     occupiedCells,
     maxDegree,
     acrossCount,
@@ -144,7 +156,8 @@ export function scorePuzzle(puzzle, termById, corpusTerms, config) {
 
   const score =
     35 * metrics.wordCoverage +
-    20 * metrics.crossingQuality +
+    14 * metrics.crossingQuality +
+    16 * metrics.extraCrossingQuality +
     12 * metrics.compactnessQuality +
     10 * metrics.spatialBalance +
     8 * metrics.orientationBalance +

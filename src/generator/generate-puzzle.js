@@ -258,13 +258,43 @@ function retainCandidate(context, state) {
   );
 }
 
+function targetWordCandidates(context) {
+  return context.candidates.filter(
+    (candidate) =>
+      candidate.quality.metrics.placedWordCount >= context.config.targetWords,
+  );
+}
+
+function hasEnoughBaseCandidates(context) {
+  return targetWordCandidates(context).length >= context.config.retainedCandidates;
+}
+
 function hasEnoughTargetCandidates(context) {
   return (
-    context.candidates.filter(
+    targetWordCandidates(context).filter(
       (candidate) =>
-        candidate.quality.metrics.placedWordCount >= context.config.targetWords,
-    ).length >= context.config.retainedCandidates
+        candidate.quality.metrics.extraCrossingTargetMet,
+    ).length >= context.config.targetQualifiedCandidates
   );
+}
+
+function shouldStopSearch(context) {
+  if (hasEnoughTargetCandidates(context)) {
+    context.stopReason = "intersection-target";
+    return true;
+  }
+
+  if (
+    hasEnoughBaseCandidates(context) &&
+    context.nodeCount >= context.config.densitySearchNodeLimit
+  ) {
+    // A dense layout is desirable, but the player must never wait on an
+    // unbounded search. Keep the best valid layouts found so far as fallback.
+    context.stopReason = "density-node-limit";
+    return true;
+  }
+
+  return false;
 }
 
 function search(state, context) {
@@ -279,8 +309,7 @@ function search(state, context) {
     retainCandidate(context, state);
   }
 
-  if (hasEnoughTargetCandidates(context)) {
-    context.stopReason = "target-candidates";
+  if (shouldStopSearch(context)) {
     return;
   }
 
@@ -297,6 +326,9 @@ function search(state, context) {
     for (const candidate of group.candidates) {
       if (context.nodeCount >= context.config.maxTotalNodes) {
         context.stopReason = "node-limit";
+        return;
+      }
+      if (shouldStopSearch(context)) {
         return;
       }
 
@@ -363,7 +395,7 @@ function generateFromPool(pool, context) {
       context,
     );
 
-    if (hasEnoughTargetCandidates(context)) {
+    if (shouldStopSearch(context)) {
       return;
     }
   }
@@ -427,7 +459,7 @@ export function generatePuzzle({
     );
     generateFromPool(pool, context);
 
-    if (hasEnoughTargetCandidates(context)) {
+    if (shouldStopSearch(context)) {
       break;
     }
   }
@@ -452,7 +484,7 @@ export function generatePuzzle({
       nodeCount: context.nodeCount,
       restartCount: context.restartCount,
       stopReason: context.stopReason,
-      generatorVersion: "phase2-v1",
+      generatorVersion: "phase3-v1",
       recencyFingerprint: recencyFingerprint(selectionWeights),
     },
   };

@@ -39,15 +39,35 @@ function describeCell(player, row, col, startNumbers) {
   );
 }
 
-function applyBoardCellState(cellButton, player, row, col, activeKeys, activeCellKey, startNumbers) {
+function applyBoardCellState(
+  cellButton,
+  player,
+  row,
+  col,
+  activeKeys,
+  activeCellKey,
+  startNumbers,
+  options,
+) {
   const key = row + ":" + col;
   const preview = player.getCellPreview(row, col);
   const letter = player.getCellDisplayInput(row, col);
   const letterElement = cellButton.querySelector(".board-cell-letter");
+  const boardCell = player.puzzle.board.cells[
+    row * player.puzzle.board.width + col
+  ];
+  const showCorrectColors = options.preferences?.showCorrectColors !== false;
+  const celebrate = (options.celebratedWordIds || []).some(
+    (wordId) => boardCell?.acrossId === wordId || boardCell?.downId === wordId,
+  );
 
   cellButton.classList.toggle("board-cell--active-word", activeKeys.has(key));
   cellButton.classList.toggle("board-cell--active", key === activeCellKey);
-  cellButton.classList.toggle("board-cell--confirmed", player.isCellLocked(key));
+  cellButton.classList.toggle(
+    "board-cell--confirmed",
+    showCorrectColors && player.isCellLocked(key),
+  );
+  cellButton.classList.toggle("board-cell--celebrate", celebrate);
   cellButton.classList.toggle("board-cell--preview", Boolean(preview));
   cellButton.setAttribute("aria-pressed", String(key === activeCellKey));
   cellButton.setAttribute("aria-label", describeCell(player, row, col, startNumbers));
@@ -55,7 +75,7 @@ function applyBoardCellState(cellButton, player, row, col, activeKeys, activeCel
   letterElement.classList.toggle("board-cell-letter--preview", Boolean(preview));
 }
 
-function renderBoard(player, onCellTap) {
+function renderBoard(player, onCellTap, options) {
   const board = player.puzzle.board;
   const activeKeys = activeWordCellKeys(player);
   const activeCellKey = player.getActiveCellKey();
@@ -99,6 +119,7 @@ function renderBoard(player, onCellTap) {
         activeKeys,
         activeCellKey,
         startNumbers,
+        options,
       );
       cellButton.addEventListener("click", () => onCellTap(row, col));
       boardElement.append(cellButton);
@@ -110,7 +131,7 @@ function renderBoard(player, onCellTap) {
   return boardElement;
 }
 
-function renderClueList(player, direction, onWordSelect) {
+function renderClueList(player, direction, onWordSelect, options) {
   const words = player.words.filter((word) => word.direction === direction);
   const section = element("section", "clue-list-section");
   section.append(element("h3", null, direction === "across" ? "ヨコ" : "タテ"));
@@ -130,7 +151,9 @@ function renderClueList(player, direction, onWordSelect) {
       button.classList.add("clue-button--active");
     }
     if (player.isWordCorrect(word.id)) {
-      button.classList.add("clue-button--correct");
+      if (options.preferences?.showCorrectColors !== false) {
+        button.classList.add("clue-button--correct");
+      }
       button.append(element("span", "clue-complete-mark", " 正解"));
     }
 
@@ -161,7 +184,7 @@ function renderDirectionButton(player, direction, onSelectDirection) {
   return button;
 }
 
-function renderCurrentClue(player, callbacks) {
+function renderCurrentClue(player, callbacks, options) {
   const word = player.getActiveWord();
   const progress = player.getProgress();
   const panel = element("section", "current-clue-panel");
@@ -224,23 +247,59 @@ function renderCurrentClue(player, callbacks) {
   return panel;
 }
 
-export function renderPlayer(container, player, callbacks) {
+function renderPlayerSettings(options, onPreferencesChange) {
+  const preferences = options.preferences || {};
+  const panel = element("details", "player-settings");
+  panel.append(element("summary", "player-settings-summary", "表示・音の設定"));
+  const content = element("div", "player-settings-content");
+
+  for (const setting of [
+    {
+      key: "showCorrectColors",
+      label: "正解したマスを緑色にする",
+      checked: preferences.showCorrectColors !== false,
+    },
+    {
+      key: "soundEnabled",
+      label: "正解時の効果音を鳴らす",
+      checked: preferences.soundEnabled !== false,
+    },
+  ]) {
+    const label = element("label", "toggle-setting");
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = setting.checked;
+    input.addEventListener("change", () =>
+      onPreferencesChange({ [setting.key]: input.checked }),
+    );
+    label.append(input, element("span", null, setting.label));
+    content.append(label);
+  }
+
+  panel.append(content);
+  return panel;
+}
+
+export function renderPlayer(container, player, callbacks, options = {}) {
   container.replaceChildren();
 
   const boardSection = element("section", "board-section player-board-section");
   boardSection.append(
     element("h2", null, "クロスワードを解こう"),
     element("p", "board-meta", "ヒントを読んでから、選択中の単語をもう一度タップして入力します。交差マスの方向は、ヒント欄のヨコ／タテで選べます。"),
-    renderBoard(player, callbacks.onCellTap),
+    renderBoard(player, callbacks.onCellTap, options),
   );
 
   const information = element("aside", "player-information");
-  information.append(renderCurrentClue(player, callbacks));
+  information.append(renderCurrentClue(player, callbacks, options));
 
   const resetButton = element("button", "text-button", "入力をリセット");
   resetButton.type = "button";
   resetButton.addEventListener("click", callbacks.onReset);
-  information.append(resetButton);
+  information.append(
+    resetButton,
+    renderPlayerSettings(options, callbacks.onPreferencesChange),
+  );
 
   const layout = element("div", "puzzle-layout puzzle-layout--player");
   layout.append(boardSection, information);
@@ -252,8 +311,8 @@ export function renderPlayer(container, player, callbacks) {
   cluePanel.append(element("summary", "clue-panel-summary", "問題一覧"));
   const clueLayout = element("div", "clue-panel-content");
   clueLayout.append(
-    renderClueList(player, "across", callbacks.onWordSelect),
-    renderClueList(player, "down", callbacks.onWordSelect),
+    renderClueList(player, "across", callbacks.onWordSelect, options),
+    renderClueList(player, "down", callbacks.onWordSelect, options),
   );
   cluePanel.append(clueLayout);
   container.append(cluePanel);
@@ -275,7 +334,7 @@ export function renderPlayer(container, player, callbacks) {
  * complete player tree there can disturb a mobile keyboard, so only board cell
  * content and selection styling are patched while the active clue is unchanged.
  */
-export function patchPlayerBoard(container, player) {
+export function patchPlayerBoard(container, player, preferences = {}) {
   const boardElement = container.querySelector(".crossword-board--player");
   if (!boardElement) {
     return false;
@@ -298,6 +357,7 @@ export function patchPlayerBoard(container, player) {
       activeKeys,
       activeCellKey,
       startNumbers,
+      { preferences, celebratedWordIds: [] },
     );
   }
 

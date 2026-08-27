@@ -5,6 +5,9 @@ const SHARED_LIMITS = Object.freeze({
   maxCandidatesPerWord: 24,
   maxWordGroupsPerDepth: 3,
   retainedCandidates: 8,
+  // One dense target candidate is enough because all retained layouts are still
+  // score-compared. Requiring many of them makes mobile generation needlessly slow.
+  targetQualifiedCandidates: 1,
 });
 
 export const PUZZLE_PRESETS = Object.freeze({
@@ -19,6 +22,8 @@ export const PUZZLE_PRESETS = Object.freeze({
     candidatePoolSize: 18,
     maxFamilyCount: 1,
     softFamilyCount: 1,
+    targetExtraCrossings: 0,
+    densitySearchNodeLimit: 80,
     ...SHARED_LIMITS,
   }),
   normal: Object.freeze({
@@ -32,6 +37,8 @@ export const PUZZLE_PRESETS = Object.freeze({
     candidatePoolSize: 26,
     maxFamilyCount: 2,
     softFamilyCount: 1,
+    targetExtraCrossings: 1,
+    densitySearchNodeLimit: 220,
     ...SHARED_LIMITS,
   }),
   hard: Object.freeze({
@@ -45,6 +52,10 @@ export const PUZZLE_PRESETS = Object.freeze({
     candidatePoolSize: 34,
     maxFamilyCount: 2,
     softFamilyCount: 1,
+    // 11×11でもタップしやすい語数を保つため、まずは連結に必要な数より
+    // 1交差多い盤面を安定して選ぶ。2交差以上はスコアで引き続き優先する。
+    targetExtraCrossings: 1,
+    densitySearchNodeLimit: 320,
     ...SHARED_LIMITS,
   }),
 });

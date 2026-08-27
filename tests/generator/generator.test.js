@@ -27,12 +27,21 @@ for (const presetId of Object.keys(PUZZLE_PRESETS)) {
     assert.ok(first.placements.length >= config.minWords);
     assert.equal(first.debug.fingerprint, second.debug.fingerprint);
     assert.deepEqual(first.placements, second.placements);
+    assert.equal(
+      first.quality.metrics.extraCrossingCount,
+      Math.max(
+        0,
+        first.quality.metrics.crossingCount -
+          (first.quality.metrics.placedWordCount - 1),
+      ),
+    );
   });
 }
 
 test("各プリセットで100回連続生成して必須制約を守る", { timeout: 120000 }, () => {
   for (const presetId of Object.keys(PUZZLE_PRESETS)) {
     const config = getPuzzlePreset(presetId);
+    let densityTargetCount = 0;
 
     for (let seed = 1; seed <= 100; seed += 1) {
       const puzzle = generatePuzzle({
@@ -50,6 +59,16 @@ test("各プリセットで100回連続生成して必須制約を守る", { tim
       assert.ok(
         puzzle.placements.length >= config.minWords,
         presetId + " seed=" + seed + " の語数が不足しています。",
+      );
+      if (puzzle.quality.metrics.extraCrossingTargetMet) {
+        densityTargetCount += 1;
+      }
+    }
+
+    if (config.targetExtraCrossings > 0) {
+      assert.ok(
+        densityTargetCount >= 60,
+        presetId + " は追加交差の目標を十分な割合で満たしていません。",
       );
     }
   }

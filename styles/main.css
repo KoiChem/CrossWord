@@ -186,10 +186,10 @@ h2 {
   width: min(100%, 500px);
   margin: 0 auto;
   overflow: hidden;
-  border: 2px solid #172033;
+  border: 1px solid #c8d1df;
   border-radius: 8px;
-  background: #172033;
-  gap: 1px;
+  background: #dde3ec;
+  gap: 2px;
 }
 
 .board-cell {
@@ -199,7 +199,7 @@ h2 {
   place-items: center;
   border: 0;
   padding: 0;
-  background: #172033;
+  background: #edf1f5;
   color: transparent;
   font-weight: 800;
 }
@@ -217,13 +217,14 @@ h2 {
 
 .crossword-board--player {
   width: min(100%, 470px);
-  border-color: #20314f;
+  border-color: #c8d1df;
   border-radius: 12px;
   gap: 2px;
   touch-action: manipulation;
 }
 
 .crossword-board--player .board-cell--void {
+  background: #edf1f5;
   pointer-events: none;
 }
 
@@ -255,6 +256,27 @@ h2 {
 .crossword-board--player .board-cell--confirmed {
   background: #dff6e9;
   color: #125d43;
+}
+
+@keyframes correct-pop {
+  0% {
+    box-shadow: inset 0 0 0 0 rgb(67 174 118 / 0);
+    transform: scale(1);
+  }
+
+  45% {
+    box-shadow: inset 0 0 0 3px rgb(67 174 118 / 0.65);
+    transform: scale(1.06);
+  }
+
+  100% {
+    box-shadow: inset 0 0 0 0 rgb(67 174 118 / 0);
+    transform: scale(1);
+  }
+}
+
+.crossword-board--player .board-cell--celebrate {
+  animation: correct-pop 360ms ease-out both;
 }
 
 .crossword-board--player .board-cell--preview {
@@ -425,6 +447,60 @@ h2 {
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.player-settings {
+  overflow: hidden;
+  border: 1px solid #dbe3f0;
+  border-radius: 12px;
+  background: #f8faff;
+}
+
+.player-settings-summary {
+  display: block;
+  padding: 11px 12px;
+  color: #526f9e;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 800;
+  list-style: none;
+}
+
+.player-settings-summary::-webkit-details-marker {
+  display: none;
+}
+
+.player-settings-summary::after {
+  float: right;
+  content: "＋";
+}
+
+.player-settings[open] .player-settings-summary::after {
+  content: "−";
+}
+
+.player-settings-content {
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid #dbe3f0;
+  padding: 12px;
+}
+
+.toggle-setting {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 32px;
+  color: #40516d;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.toggle-setting input {
+  inline-size: 18px;
+  block-size: 18px;
+  margin: 0;
+  accent-color: #2a64dd;
 }
 
 .clue-panel {

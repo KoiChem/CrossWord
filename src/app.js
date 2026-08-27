@@ -2,12 +2,14 @@ import {
   getEnabledEntries,
   loadAliphaticDataset,
 } from "../data/aliphatic.js";
+import { createSoundEffects } from "./audio/sound-effects.js";
 import { getPuzzlePreset } from "./config/puzzle-presets.js";
 import { generatePuzzle } from "./generator/generate-puzzle.js";
 import { createRandomSeed } from "./generator/seeded-random.js";
 import { validateDataset } from "./generator/validator.js";
 import { createRecentTermHistory } from "./history/recent-term-history.js";
 import { createImeInputController } from "./player/input-controller.js";
+import { createPlayerPreferences } from "./player/player-preferences.js";
 import { createPuzzleState } from "./player/puzzle-state.js";
 import { createTapController } from "./player/tap-controller.js";
 import { patchPlayerBoard, renderPlayer } from "./ui/render-player.js";
@@ -27,6 +29,8 @@ let recentTermHistory;
 let lastGenerationRequestKey = null;
 let lastSelectionWeights = null;
 const tapController = createTapController();
+const playerPreferences = createPlayerPreferences();
+const soundEffects = createSoundEffects();
 let viewportRevealFrame = null;
 
 function setStatus(message, isError = false) {
@@ -63,12 +67,14 @@ function renderPlayerState(options = {}) {
     return;
   }
 
-  if (options.patchBoard && patchPlayerBoard(puzzleOutput, player)) {
+  const preferences = playerPreferences.get();
+  if (options.patchBoard && patchPlayerBoard(puzzleOutput, player, preferences)) {
     return;
   }
 
   renderPlayer(puzzleOutput, player, {
     onCellTap(row, col) {
+      soundEffects.unlock();
       const selection = player.selectCell(row, col);
       const isDoubleTap =
         player.getMode() !== "input" &&
@@ -104,6 +110,7 @@ function renderPlayerState(options = {}) {
       );
     },
     onEnterInputMode() {
+      soundEffects.unlock();
       tapController.reset();
       updatePlayer(player.enterInputMode(), true);
     },
@@ -117,6 +124,14 @@ function renderPlayerState(options = {}) {
       imeController.blur();
       updatePlayer(player.reset(), false, "入力をリセットしました。");
     },
+    onPreferencesChange(partial) {
+      const preferences = playerPreferences.update(partial);
+      soundEffects.setEnabled(preferences.soundEnabled);
+      renderPlayerState();
+    },
+  }, {
+    preferences,
+    celebratedWordIds: options.celebratedWordIds || [],
   });
 }
 
@@ -138,9 +153,13 @@ function updatePlayer(result, focusInput = false, message = "", options = {}) {
     return;
   }
 
-  renderPlayerState({ patchBoard: options.patchBoard });
+  const newlyCorrectWordIds = result.newlyCorrectWordIds;
+  renderPlayerState({
+    patchBoard: options.patchBoard && newlyCorrectWordIds.length === 0,
+    celebratedWordIds: newlyCorrectWordIds,
+  });
   const progress = player.getProgress();
-  const newlyCorrectNames = result.newlyCorrectWordIds
+  const newlyCorrectNames = newlyCorrectWordIds
     .map((wordId) => dataset.entries.find((term) => term.id === wordId)?.displayName)
     .filter(Boolean);
 
@@ -150,6 +169,10 @@ function updatePlayer(result, focusInput = false, message = "", options = {}) {
     setStatus(newlyCorrectNames.join("・") + " が正解！ " + progress.correct + " / " + progress.total + "問完成");
   } else if (message) {
     setStatus(message);
+  }
+
+  if (newlyCorrectWordIds.length > 0) {
+    soundEffects.playCorrect(result.completed);
   }
 
   if (focusInput) {
@@ -226,6 +249,7 @@ async function initialize() {
     }
 
     recentTermHistory = createRecentTermHistory();
+    soundEffects.setEnabled(playerPreferences.get().soundEnabled);
     imeController = createImeInputController(imeInput, {
       onCharacters(characters) {
         if (player?.getMode() !== "input") {
