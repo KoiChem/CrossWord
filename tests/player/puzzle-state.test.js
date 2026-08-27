@@ -10,7 +10,10 @@ const terms = [
     displayName: "ヨコ語",
     answer: "あいう",
     category: "テスト",
-    clues: [{ level: 1, type: "definition", text: "ヨコのヒント" }],
+    clues: [
+      { level: 1, type: "definition", text: "ヨコのヒント" },
+      { level: 2, type: "property", text: "ヨコの発展ヒント" },
+    ],
   },
   {
     id: "down",
@@ -43,6 +46,18 @@ test("交差マスは選択中の方向を維持し、明示操作でタテ・�
   assert.equal(state.getActiveWord().id, "across");
   state.selectDirection("down");
   assert.equal(state.getActiveWord().id, "down");
+});
+
+test("プリセットに応じて最適なヒント難易度を選び、未整備語は安全にフォールバックする", () => {
+  const normalState = createPuzzleState(createPuzzle(), terms, { clueLevel: 2 });
+  const hardState = createPuzzleState(createPuzzle(), terms, { clueLevel: 3 });
+
+  normalState.selectWord("across");
+  hardState.selectWord("across");
+  assert.equal(normalState.getActiveWord().clue.text, "ヨコの発展ヒント");
+  assert.equal(hardState.getActiveWord().clue.text, "ヨコの発展ヒント");
+  hardState.selectWord("down");
+  assert.equal(hardState.getActiveWord().clue.text, "タテのヒント");
 });
 
 test("閲覧モードと入力モードを分け、IMEプレビューは確定回答を変えない", () => {

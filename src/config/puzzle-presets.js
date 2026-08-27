@@ -20,6 +20,7 @@ export const PUZZLE_PRESETS = Object.freeze({
     targetWords: 4,
     maxWords: 5,
     candidatePoolSize: 18,
+    clueLevel: 1,
     maxFamilyCount: 1,
     softFamilyCount: 1,
     targetExtraCrossings: 0,
@@ -35,6 +36,7 @@ export const PUZZLE_PRESETS = Object.freeze({
     targetWords: 6,
     maxWords: 7,
     candidatePoolSize: 26,
+    clueLevel: 2,
     maxFamilyCount: 2,
     softFamilyCount: 1,
     targetExtraCrossings: 1,
@@ -50,6 +52,7 @@ export const PUZZLE_PRESETS = Object.freeze({
     targetWords: 8,
     maxWords: 9,
     candidatePoolSize: 34,
+    clueLevel: 3,
     maxFamilyCount: 2,
     softFamilyCount: 1,
     // 11×11でもタップしやすい語数を保つため、まずは連結に必要な数より

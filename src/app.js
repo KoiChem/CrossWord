@@ -202,7 +202,9 @@ function generateAndRender() {
       seed,
       selectionWeights,
     });
-    player = createPuzzleState(puzzle, dataset.entries);
+    player = createPuzzleState(puzzle, dataset.entries, {
+      clueLevel: config.clueLevel,
+    });
     tapController.reset();
     lastGenerationRequestKey = requestKey;
     lastSelectionWeights = selectionWeights;

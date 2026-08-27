@@ -1,4 +1,5 @@
 import { DIRECTIONS, getCell } from "../generator/board.js";
+import { selectClueForLevel } from "./clue-selector.js";
 
 function cellKey(row, col) {
   return row + ":" + col;
@@ -8,11 +9,7 @@ function directionLabel(direction) {
   return direction === "across" ? "ヨコ" : "タテ";
 }
 
-function clueFor(term) {
-  return [...term.clues].sort((left, right) => left.level - right.level)[0];
-}
-
-function buildWords(puzzle, termById) {
+function buildWords(puzzle, termById, clueLevel) {
   const numbersByStart = new Map();
   let nextNumber = 1;
 
@@ -44,7 +41,7 @@ function buildWords(puzzle, termById) {
         direction: placement.direction,
         directionLabel: directionLabel(placement.direction),
         category: term.category,
-        clue: clueFor(term),
+        clue: selectClueForLevel(term, clueLevel),
         cells,
       };
     })
@@ -56,9 +53,9 @@ function buildWords(puzzle, termById) {
     );
 }
 
-export function createPuzzleState(puzzle, terms) {
+export function createPuzzleState(puzzle, terms, options = {}) {
   const termById = new Map(terms.map((term) => [term.id, term]));
-  const words = buildWords(puzzle, termById);
+  const words = buildWords(puzzle, termById, options.clueLevel);
   const wordById = new Map(words.map((word) => [word.id, word]));
   const wordIdsByCell = new Map();
   const inputByCell = new Map();
