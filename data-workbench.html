@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="有機化学クロスワードの教材データをPCで確認・修正するための作業台"
+    />
+    <title>教材ワークベンチ | 有機化学クロスワード</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/workbench.css" />
+  </head>
+  <body>
+    <main class="workbench-shell">
+      <header class="workbench-header">
+        <p class="eyebrow">CURRICULUM WORKBENCH</p>
+        <div class="workbench-heading-row">
+          <div>
+            <h1>脂肪族・教材ワークベンチ</h1>
+            <p class="lede">PCの大きな画面で、出題候補とヒントを確認・修正できます。</p>
+          </div>
+          <a class="secondary-button workbench-back-link" href="./index.html">学習画面へ戻る</a>
+        </div>
+      </header>
+
+      <aside class="workbench-narrow-note">
+        このページはPCまたは横向きタブレットでの教材確認用です。編集は大きな画面で行ってください。
+      </aside>
+
+      <section class="workbench-toolbar" aria-label="教材データの操作">
+        <label>
+          検索
+          <input id="workbench-search" type="search" placeholder="名称・答え・分類・family" autocomplete="off" disabled />
+        </label>
+        <label>
+          分類
+          <select id="workbench-category" disabled></select>
+        </label>
+        <label>
+          学習優先度
+          <select id="workbench-priority" disabled>
+            <option value="">すべて</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
+        </label>
+        <label>
+          出題設定
+          <select id="workbench-enabled" disabled>
+            <option value="">すべて</option>
+            <option value="enabled">出題ON</option>
+            <option value="disabled">出題OFF</option>
+          </select>
+        </label>
+        <div class="workbench-toolbar-actions">
+          <button id="workbench-export" class="primary-button" type="button" disabled>JSONを書き出す</button>
+          <label class="secondary-button workbench-import-label">
+            JSONを読み込む
+            <input id="workbench-import" type="file" accept="application/json,.json" disabled />
+          </label>
+          <button id="workbench-reset" class="text-button" type="button" disabled>下書きを初期化</button>
+        </div>
+      </section>
+
+      <p id="workbench-status" class="workbench-status" aria-live="polite">教材データを読み込んでいます。</p>
+
+      <section class="workbench-layout">
+        <aside id="workbench-list" class="workbench-list-panel" aria-label="教材用語一覧"></aside>
+        <section id="workbench-editor" class="workbench-editor-panel" aria-label="教材用語の編集"></section>
+      </section>
+
+      <section class="workbench-guidance">
+        <h2>このページでできること</h2>
+        <p>修正はこのブラウザの下書きとして保存されます。学習用の公開データは直接変わりません。内容を確認したらJSONを書き出し、この作業に添付して教材データへ反映してください。</p>
+      </section>
+    </main>
+    <script type="module" src="./src/workbench/app.js"></script>
+  </body>
+</html>
