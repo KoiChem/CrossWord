@@ -624,6 +624,10 @@ h2 {
   transform: translateX(-50%);
 }
 
+.input-clue-bar {
+  display: none;
+}
+
 @media (max-width: 700px) {
   .app-shell {
     padding: 20px 12px 42px;
@@ -662,6 +666,50 @@ h2 {
 
   .crossword-board--player {
     width: 100%;
+  }
+
+  .crossword-board--player .board-cell--active {
+    scroll-margin-top: calc(var(--input-clue-bar-height, 0px) + 20px);
+    scroll-margin-bottom: 20px;
+  }
+
+  .input-clue-bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 9px;
+    position: fixed;
+    z-index: 10;
+    top: calc(env(safe-area-inset-top) + 8px);
+    right: max(12px, env(safe-area-inset-right));
+    left: max(12px, env(safe-area-inset-left));
+    margin: 0;
+    border: 1px solid rgb(153 190 255 / 0.7);
+    border-radius: 14px;
+    background: rgb(24 52 99 / 0.94);
+    box-shadow: 0 8px 24px rgb(18 37 71 / 0.24);
+    padding: 10px 12px;
+    color: #fff;
+    pointer-events: none;
+    transform: translateY(var(--input-visual-viewport-offset-top, 0px));
+  }
+
+  .input-clue-bar-label {
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.16);
+    padding: 4px 7px;
+    font-size: 0.73rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+
+  .input-clue-bar-text {
+    margin: 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.48;
   }
 
   .current-clue-panel h2 {

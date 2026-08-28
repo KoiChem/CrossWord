@@ -32,6 +32,7 @@ const tapController = createTapController();
 const playerPreferences = createPlayerPreferences();
 const soundEffects = createSoundEffects();
 let viewportRevealFrame = null;
+let inputHintLayoutFrame = null;
 
 function setStatus(message, isError = false) {
   statusMessage.textContent = message;
@@ -133,18 +134,41 @@ function renderPlayerState(options = {}) {
     preferences,
     celebratedWordIds: options.celebratedWordIds || [],
   });
+  syncInputHintLayout();
+}
+
+function syncInputHintLayout() {
+  if (inputHintLayoutFrame) {
+    cancelAnimationFrame(inputHintLayoutFrame);
+  }
+
+  inputHintLayoutFrame = requestAnimationFrame(() => {
+    inputHintLayoutFrame = null;
+    const viewport = window.visualViewport;
+    const rootStyle = document.documentElement.style;
+    const offsetTop = viewport?.offsetTop || 0;
+    const hintBar = puzzleOutput.querySelector(".input-clue-bar");
+    const height = hintBar ? Math.ceil(hintBar.getBoundingClientRect().height) : 0;
+
+    rootStyle.setProperty("--input-visual-viewport-offset-top", offsetTop + "px");
+    rootStyle.setProperty("--input-clue-bar-height", height + "px");
+  });
 }
 
 function revealActiveInputContext() {
+  syncInputHintLayout();
+
   if (viewportRevealFrame) {
     cancelAnimationFrame(viewportRevealFrame);
   }
 
   viewportRevealFrame = requestAnimationFrame(() => {
     viewportRevealFrame = null;
-    puzzleOutput
-      .querySelector(".board-cell--active")
-      ?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    const compactLayout = window.matchMedia("(max-width: 700px)").matches;
+    puzzleOutput.querySelector(".board-cell--active")?.scrollIntoView({
+      block: compactLayout ? "center" : "nearest",
+      inline: "nearest",
+    });
   });
 }
 
@@ -314,10 +338,16 @@ newSeedButton.addEventListener("click", () => {
   generateAndRender();
 });
 
-window.visualViewport?.addEventListener("resize", () => {
+function handleVisualViewportChange() {
+  syncInputHintLayout();
+
   if (player?.getMode() === "input") {
     revealActiveInputContext();
   }
-});
+}
+
+window.visualViewport?.addEventListener("resize", handleVisualViewportChange);
+window.visualViewport?.addEventListener("scroll", handleVisualViewportChange);
+window.addEventListener("resize", syncInputHintLayout);
 
 initialize();

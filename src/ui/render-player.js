@@ -1,3 +1,5 @@
+import { getInputHint } from "../player/input-hint.js";
+
 function element(tagName, className, text) {
   const node = document.createElement(tagName);
   if (className) {
@@ -247,6 +249,25 @@ function renderCurrentClue(player, callbacks, options) {
   return panel;
 }
 
+function renderInputHintBar(player) {
+  const hint = getInputHint(player);
+
+  if (!hint) {
+    return null;
+  }
+
+  // The full clue remains available in the semantic current-clue panel. This
+  // duplicate is deliberately visual-only so screen readers do not announce
+  // the same clue whenever a player moves across the board.
+  const bar = element("aside", "input-clue-bar");
+  bar.setAttribute("aria-hidden", "true");
+  bar.append(
+    element("span", "input-clue-bar-label", hint.label),
+    element("p", "input-clue-bar-text", hint.text),
+  );
+  return bar;
+}
+
 function renderPlayerSettings(options, onPreferencesChange) {
   const preferences = options.preferences || {};
   const panel = element("details", "player-settings");
@@ -304,6 +325,11 @@ export function renderPlayer(container, player, callbacks, options = {}) {
   const layout = element("div", "puzzle-layout puzzle-layout--player");
   layout.append(boardSection, information);
   container.append(layout);
+
+  const inputHintBar = renderInputHintBar(player);
+  if (inputHintBar) {
+    container.append(inputHintBar);
+  }
 
   const cluePanel = element("details", "clue-panel");
   cluePanel.setAttribute("aria-label", "問題一覧");
