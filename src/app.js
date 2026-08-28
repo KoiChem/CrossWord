@@ -33,6 +33,9 @@ const playerPreferences = createPlayerPreferences();
 const soundEffects = createSoundEffects();
 let viewportRevealFrame = null;
 let inputHintLayoutFrame = null;
+let viewportSettleTimer = null;
+let lastInputHintOffsetTop = null;
+let lastInputHintHeight = null;
 
 function setStatus(message, isError = false) {
   statusMessage.textContent = message;
@@ -134,28 +137,46 @@ function renderPlayerState(options = {}) {
     preferences,
     celebratedWordIds: options.celebratedWordIds || [],
   });
+
+  if (player.getMode() !== "input" && viewportSettleTimer) {
+    clearTimeout(viewportSettleTimer);
+    viewportSettleTimer = null;
+  }
   syncInputHintLayout();
 }
 
 function syncInputHintLayout() {
   if (inputHintLayoutFrame) {
-    cancelAnimationFrame(inputHintLayoutFrame);
+    return;
   }
 
   inputHintLayoutFrame = requestAnimationFrame(() => {
     inputHintLayoutFrame = null;
     const viewport = window.visualViewport;
     const rootStyle = document.documentElement.style;
-    const offsetTop = viewport?.offsetTop || 0;
+    const offsetTop = Math.round(viewport?.offsetTop || 0);
     const hintBar = puzzleOutput.querySelector(".input-clue-bar");
     const height = hintBar ? Math.ceil(hintBar.getBoundingClientRect().height) : 0;
 
-    rootStyle.setProperty("--input-visual-viewport-offset-top", offsetTop + "px");
-    rootStyle.setProperty("--input-clue-bar-height", height + "px");
+    // Avoid writing identical custom properties for every visualViewport event.
+    // On iOS Safari that can contribute to scroll anchoring while the keyboard
+    // is animating.
+    if (lastInputHintOffsetTop !== offsetTop) {
+      rootStyle.setProperty("--input-visual-viewport-offset-top", offsetTop + "px");
+      lastInputHintOffsetTop = offsetTop;
+    }
+    if (lastInputHintHeight !== height) {
+      rootStyle.setProperty("--input-clue-bar-height", height + "px");
+      lastInputHintHeight = height;
+    }
   });
 }
 
 function revealActiveInputContext() {
+  if (player?.getMode() !== "input") {
+    return;
+  }
+
   syncInputHintLayout();
 
   if (viewportRevealFrame) {
@@ -164,9 +185,14 @@ function revealActiveInputContext() {
 
   viewportRevealFrame = requestAnimationFrame(() => {
     viewportRevealFrame = null;
-    const compactLayout = window.matchMedia("(max-width: 700px)").matches;
+    if (player?.getMode() !== "input") {
+      return;
+    }
+
+    // "nearest" only moves the page when the selected cell is actually out of
+    // view. The active-cell scroll margins reserve room for the hint bar.
     puzzleOutput.querySelector(".board-cell--active")?.scrollIntoView({
-      block: compactLayout ? "center" : "nearest",
+      block: "nearest",
       inline: "nearest",
     });
   });
@@ -338,16 +364,36 @@ newSeedButton.addEventListener("click", () => {
   generateAndRender();
 });
 
-function handleVisualViewportChange() {
-  syncInputHintLayout();
-
-  if (player?.getMode() === "input") {
-    revealActiveInputContext();
+function scheduleSettledViewportReveal() {
+  if (player?.getMode() !== "input") {
+    return;
   }
+
+  if (viewportSettleTimer) {
+    clearTimeout(viewportSettleTimer);
+  }
+
+  // Keyboard opening fires a short stream of resize events. Wait until that
+  // stream settles, then perform at most one visibility correction.
+  viewportSettleTimer = setTimeout(() => {
+    viewportSettleTimer = null;
+    revealActiveInputContext();
+  }, 160);
 }
 
-window.visualViewport?.addEventListener("resize", handleVisualViewportChange);
-window.visualViewport?.addEventListener("scroll", handleVisualViewportChange);
-window.addEventListener("resize", syncInputHintLayout);
+function handleVisualViewportResize() {
+  syncInputHintLayout();
+  scheduleSettledViewportReveal();
+}
+
+function handleVisualViewportScroll() {
+  // A scroll can be caused by scrollIntoView itself. Updating only the bar's
+  // visual-viewport offset here breaks that feedback loop.
+  syncInputHintLayout();
+}
+
+window.visualViewport?.addEventListener("resize", handleVisualViewportResize);
+window.visualViewport?.addEventListener("scroll", handleVisualViewportScroll);
+window.addEventListener("resize", handleVisualViewportResize);
 
 initialize();
