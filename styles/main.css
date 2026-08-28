@@ -246,7 +246,8 @@ h2 {
 }
 
 .crossword-board--player .board-cell--active-word {
-  background: #e9f1ff;
+  background: #fff8c9;
+  color: #172033;
 }
 
 .crossword-board--player .board-cell--crossing {
@@ -281,6 +282,14 @@ h2 {
 
 .crossword-board--player .board-cell--preview {
   background: #edf4ff;
+}
+
+/* Keep the entire selected answer legible as one pale lemon-yellow band.
+ * This comes after confirmation and preview states so an already solved word
+ * still reads as the word currently being worked with. */
+.crossword-board--player .board-cell--active-word:not(.board-cell--active) {
+  background: #fff8c9;
+  color: #172033;
 }
 
 .crossword-board--player .board-cell--active {
