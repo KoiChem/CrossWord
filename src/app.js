@@ -9,6 +9,7 @@ import { createRandomSeed } from "./generator/seeded-random.js";
 import { validateDataset } from "./generator/validator.js";
 import { createRecentTermHistory } from "./history/recent-term-history.js";
 import { createImeInputController } from "./player/input-controller.js";
+import { createKeyboardViewportTracker } from "./player/keyboard-viewport.js";
 import { createPlayerPreferences } from "./player/player-preferences.js";
 import { createPuzzleState } from "./player/puzzle-state.js";
 import { createTapController } from "./player/tap-controller.js";
@@ -31,6 +32,7 @@ let lastSelectionWeights = null;
 const tapController = createTapController();
 const playerPreferences = createPlayerPreferences();
 const soundEffects = createSoundEffects();
+const keyboardViewportTracker = createKeyboardViewportTracker();
 let viewportRevealFrame = null;
 let inputHintLayoutFrame = null;
 let viewportSettleTimer = null;
@@ -66,6 +68,25 @@ function generationHistoryKey(puzzle, config) {
   ].join(":");
 }
 
+function currentVisualViewportHeight() {
+  return window.visualViewport?.height || window.innerHeight;
+}
+
+function enterInputMode() {
+  const result = player.enterInputMode();
+
+  if (result.changed) {
+    keyboardViewportTracker.begin(currentVisualViewportHeight());
+  }
+
+  return result;
+}
+
+function exitInputMode() {
+  keyboardViewportTracker.reset();
+  return player.exitInputMode();
+}
+
 function renderPlayerState(options = {}) {
   if (!player) {
     return;
@@ -83,7 +104,7 @@ function renderPlayerState(options = {}) {
       const isDoubleTap =
         player.getMode() !== "input" &&
         tapController.register(player.getActiveWord()?.id);
-      const inputMode = isDoubleTap ? player.enterInputMode() : null;
+      const inputMode = isDoubleTap ? enterInputMode() : null;
       const changed = selection.changed || inputMode?.changed;
 
       if (!changed) {
@@ -116,16 +137,17 @@ function renderPlayerState(options = {}) {
     onEnterInputMode() {
       soundEffects.unlock();
       tapController.reset();
-      updatePlayer(player.enterInputMode(), true);
+      updatePlayer(enterInputMode(), true);
     },
     onExitInputMode() {
       tapController.reset();
       imeController.blur();
-      updatePlayer(player.exitInputMode());
+      updatePlayer(exitInputMode());
     },
     onReset() {
       tapController.reset();
       imeController.blur();
+      keyboardViewportTracker.reset();
       updatePlayer(player.reset(), false, "入力をリセットしました。");
     },
     onPreferencesChange(partial) {
@@ -138,9 +160,12 @@ function renderPlayerState(options = {}) {
     celebratedWordIds: options.celebratedWordIds || [],
   });
 
-  if (player.getMode() !== "input" && viewportSettleTimer) {
-    clearTimeout(viewportSettleTimer);
-    viewportSettleTimer = null;
+  if (player.getMode() !== "input") {
+    keyboardViewportTracker.reset();
+    if (viewportSettleTimer) {
+      clearTimeout(viewportSettleTimer);
+      viewportSettleTimer = null;
+    }
   }
   syncInputHintLayout();
 }
@@ -255,6 +280,7 @@ function generateAndRender() {
     player = createPuzzleState(puzzle, dataset.entries, {
       clueLevel: config.clueLevel,
     });
+    keyboardViewportTracker.reset();
     tapController.reset();
     lastGenerationRequestKey = requestKey;
     lastSelectionWeights = selectionWeights;
@@ -383,7 +409,9 @@ function scheduleSettledViewportReveal() {
 
 function handleVisualViewportResize() {
   syncInputHintLayout();
-  scheduleSettledViewportReveal();
+  if (keyboardViewportTracker.update(currentVisualViewportHeight())) {
+    scheduleSettledViewportReveal();
+  }
 }
 
 function handleVisualViewportScroll() {

@@ -48,6 +48,22 @@ test("交差マスは選択中の方向を維持し、明示操作でタテ・�
   assert.equal(state.getActiveWord().id, "down");
 });
 
+test("新規盤面とリセット直後は単語を選択せず、最初のマスタップで選ぶ", () => {
+  const state = createPuzzleState(createPuzzle(), terms);
+
+  assert.equal(state.getActiveWord(), null);
+  assert.equal(state.getActiveCellKey(), null);
+  assert.deepEqual(state.getAvailableDirections(), []);
+
+  state.selectCell(1, 0);
+  assert.equal(state.getActiveWord().id, "across");
+  assert.equal(state.getActiveCellKey(), "1:0");
+
+  state.reset();
+  assert.equal(state.getActiveWord(), null);
+  assert.equal(state.getActiveCellKey(), null);
+});
+
 test("プリセットに応じて最適なヒント難易度を選び、未整備語は安全にフォールバックする", () => {
   const normalState = createPuzzleState(createPuzzle(), terms, { clueLevel: 2 });
   const hardState = createPuzzleState(createPuzzle(), terms, { clueLevel: 3 });

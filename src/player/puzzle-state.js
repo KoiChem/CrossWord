@@ -70,8 +70,10 @@ export function createPuzzleState(puzzle, terms, options = {}) {
     }
   }
 
-  let activeWordId = words[0]?.id || null;
-  let activeCellKey = words[0]?.cells[0]?.key || null;
+  // A new board starts as a puzzle, not an already selected answer. This
+  // makes the first tap clearly mean "show this clue" on every device.
+  let activeWordId = null;
+  let activeCellKey = null;
   let mode = "browse";
 
   function getActiveWord() {
@@ -324,8 +326,8 @@ export function createPuzzleState(puzzle, terms, options = {}) {
     inputByCell.clear();
     compositionPreviewByCell.clear();
     correctWordIds.clear();
-    activeWordId = words[0]?.id || null;
-    activeCellKey = words[0]?.cells[0]?.key || null;
+    activeWordId = null;
+    activeCellKey = null;
     mode = "browse";
     return result(true);
   }

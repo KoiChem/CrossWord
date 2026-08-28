@@ -192,6 +192,11 @@ function renderCurrentClue(player, callbacks, options) {
   const panel = element("section", "current-clue-panel");
 
   if (!word) {
+    panel.append(
+      element("p", "current-clue-kicker", "HINT"),
+      element("h2", null, "マスをタップしてヒントを表示"),
+      element("p", "current-clue-category", "最初の1語を選んで始めよう"),
+    );
     return panel;
   }
 
